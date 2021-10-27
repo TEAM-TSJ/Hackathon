@@ -1,9 +1,13 @@
-# La Piscine & Hackathon & ... anything // 포괄적인 대주제
+# La Piscine & Hackathon & ... anything
+// 포괄적인 대주제
 
-## Did you heard about.. Omok? like this // 한줄설명
+## Did you heard about.. Omok? like this
+// 한줄설명
 
-## Chapter I // 챕터
-## General rules // 피씬 규칙
+## Chapter I
+// 챕터
+## General rules
+// 피씬 규칙
 
 <details>
 <summary>open/close</summary>
@@ -16,7 +20,8 @@
 
 
 ## Chapter II
-## Exercise 00: ex) c언어 // 핵심적인 키워드반영할것
+## Exercise 00: ex) c언어
+// 핵심적인 키워드반영할것
 
 |*Exercise : 00*|
 |-----------------|
@@ -36,7 +41,8 @@
 </details>
 
 ## Chapter III
-## Exercise 01: ex) 알고리즘 // 핵심적인 키워드반영할것
+## Exercise 01: ex) 알고리즘
+// 핵심적인 키워드반영할것
 
 |*Exercise : 01*|
 |-----------------|
@@ -56,7 +62,8 @@
 </details>
 
 ## Chapter IV
-## Exercise 02: ex) 추가기능 // 핵심적인 키워드반영할것
+## Exercise 02: ex) 추가기능
+// 핵심적인 키워드반영할것
 
 |*Exercise : 02*|
 |-----------------|
@@ -76,7 +83,8 @@
 </details>
 
 ## Chapter V
-## Exercise 03: ex) 플레이 고고고고 // 핵심적인 키워드반영할것
+## Exercise 03: ex) 플레이 고고고고
+// 핵심적인 키워드반영할것
 
 |*Exercise : 03*|
 |-----------------|
