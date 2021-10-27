@@ -14,7 +14,8 @@ Chapter   V. Exercise 03:
 
 
 </div>
-</details>ㅍ
+</details>
+
 ## Chapter I
 ## General rules
 
