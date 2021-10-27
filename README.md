@@ -56,7 +56,7 @@
 </details>
 
 ## Chapter IV
-## Exercise 02: ex) 추가
+## Exercise 02: ex) 추가구현
 
 |*Exercise : 02*|
 |-----------------|
@@ -76,7 +76,7 @@
 </details>
 
 ## Chapter V
-## Exercise 03: ex) 실습
+## Exercise 03: ex) 보너스
 
 |*Exercise : 03*|
 |-----------------|
