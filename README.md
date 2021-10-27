@@ -1,12 +1,9 @@
 # La Piscine & Hackathon & ... anything
-// 포괄적인 대주제
 
 ## Did you heard about.. Omok? like this
 
 ## Chapter I
-// 챕터
 ## General rules
-// 피씬 규칙
 
 <details>
 <summary>open/close</summary>
