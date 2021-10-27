@@ -48,6 +48,8 @@ Chapter   V. Exercise 03:<br>
 <summary>open/close</summary>
 <div markdown="1">
 
+ <br>
+ <br>
  ex) 레파지토리를 생성하세요. 레파지토리의 이름은 yourID_TSJ형식을 따르세요<br>
  폴더이름은 ex00 으로 하세요<br>
  이번챕터에서는 압축의 방식에 대해서 학습합니다<br>
