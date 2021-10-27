@@ -16,8 +16,7 @@
 
 
 ## Chapter II
-## Exercise 00: ex) c언어
-// 핵심적인 키워드반영할것
+## Exercise 00: ex) 개념원리
 
 |*Exercise : 00*|
 |-----------------|
@@ -38,7 +37,6 @@
 
 ## Chapter III
 ## Exercise 01: ex) 알고리즘
-// 핵심적인 키워드반영할것
 
 |*Exercise : 01*|
 |-----------------|
@@ -58,8 +56,7 @@
 </details>
 
 ## Chapter IV
-## Exercise 02: ex) 추가기능
-// 핵심적인 키워드반영할것
+## Exercise 02: ex) 추가
 
 |*Exercise : 02*|
 |-----------------|
@@ -79,8 +76,7 @@
 </details>
 
 ## Chapter V
-## Exercise 03: ex) 플레이 고고고고
-// 핵심적인 키워드반영할것
+## Exercise 03: ex) 실습
 
 |*Exercise : 03*|
 |-----------------|
