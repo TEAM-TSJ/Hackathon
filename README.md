@@ -2,7 +2,6 @@
 // 포괄적인 대주제
 
 ## Did you heard about.. Omok? like this
-// 한줄설명
 
 ## Chapter I
 // 챕터
