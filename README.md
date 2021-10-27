@@ -6,11 +6,11 @@ Did you heard about..
 <summary>open/close</summary>
 <div markdown="1">
 
-Chapter   I. General rules
-Chapter  II. Exercise 00:
-Chapter III. Exercise 01:
-Chapter  IV. Exercise 02:
-Chapter   V. Exercise 03:
+Chapter   I. General rules<br>
+Chapter  II. Exercise 00:<br>
+Chapter III. Exercise 01:<br>
+Chapter  IV. Exercise 02:<br>
+Chapter   V. Exercise 03:<br>
 
 
 </div>
