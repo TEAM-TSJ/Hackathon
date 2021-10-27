@@ -77,7 +77,7 @@ Chapter   V. Exercise 03:<br>
  a.out blabla
  ```
  
- 💡 힌트(또는 참고) www. sungclee. k.... blabla
+ 💡 힌트(또는 참고) https://performance.tistory.com/17
 
   
 </div>
