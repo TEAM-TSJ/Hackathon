@@ -1,6 +1,6 @@
-# La Piscine & Hackathon & ... anything
+# 라피신 (La Piscine)
 
-## Did you heard about.. Omok? like this
+## Did you heard about..
 
 ## Chapter I
 ## General rules
