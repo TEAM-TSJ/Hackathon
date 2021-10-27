@@ -1,6 +1,5 @@
 # 라피신 (La Piscine)
-
-## Did you heard about..
+Did you heard about..
 
 ## Chapter I
 ## General rules
