@@ -30,7 +30,6 @@ Chapter   V. Exercise 03:<br>
  ex) 메모리릭관리는 철저해야합니다.<br>
  ex) 치팅금지.
  ex) 원피스 보지마세요 . tjung <br>
- ex) 
  
 </div>
 </details>
