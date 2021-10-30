@@ -6,19 +6,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_data{
-	int data00;
-	int data01;
-}				t_data;
+/*
+** 이렇게 내맘대로 구조체로 찍어내는게 아니고 이진트리부터 정확하게 구현할줄 알아야겠다.
+** 이진트리 : 모든 노드가 2개의 서브트리를 가지고 있는 트리이다.
+*/
+typedef struct s_node
+{
+	int		data;
+	struct s_node *left;
+	struct s_node *right;
 
-typedef struct s_func{
-	int func1;
-	int func2;
-}				t_func;
-
-typedef struct s_info{
-	t_data data;
-	t_func func;
-}				t_info;
+}				t_node;
 
 #endif
