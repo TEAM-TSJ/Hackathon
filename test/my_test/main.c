@@ -5,15 +5,15 @@
 */
 void	run_tree(t_node **t)
 {
-	int value;
+	char value;
 	
 	printf("트리에 저장할 값을 입력하세요 : ");
-	scanf("%d", &value);
+	scanf("%c", &value);
 
 	printf("addr : %p\n", &value);
-	printf("value : %d\n", value);
+	printf("value : %c\n", value);
 	printf("node addr** : %p\n", t);
-	if (value < 0)//일단 음수를 재귀의 브레이크 포인트로 설정해놓고,
+	if (!value)//일단 Null 재귀의 브레이크 포인트로 설정해놓고,
 	{
 		*t = NULL;
 		return;
@@ -80,6 +80,36 @@ void	mid_tree(t_node *t)
 	}
 }
 
+int ft_exit(int value)
+{
+	if (value == 1)
+		printf("error: ac: Invalid\n");
+	else
+		printf("exit: all good\n");
+	exit(0);
+	return(0);
+}
+
+/*
+** 허프만 구현을 위한 아이디어 노트 11
+*/
+char *ft_sort(char **av)
+{
+	int i = -1;
+	int check = 0;
+
+	// 음.. 일단 빈도수 별로 정렬하고 하나씩 합쳐야 하는데,,
+	// 문자에 대한 리스트가 있어야하나??
+	// 들어온 문자를 리스트에 넣어가면서 똑같은지를 계속 찾는거지, 없으면 새노드, 있으면 그노드에 count
+	// 모두다 리스트에 집어넣었으면 버블정렬 갈겨서 count크기로 정렬때리구, 작은것부터 오른쪽1 큰건 왼쪽0에 넣는거지.
+	// 그다음 해당문자를
+	while(av[1][++i])
+	{
+		ft_count(av[i][i]);
+	}
+	return (0);//리스트의 주소가 되어야할듯
+}
+
 /*
 ** 허프만 작성규칙 두가지 기억해둘것. +++
 ** 접두어코드 + 이진트리
@@ -89,7 +119,14 @@ void	mid_tree(t_node *t)
 int	main(int ac, char **av)
 {
 	t_node *t;
+	char *ptr;
 	
+	if (ac != 2)
+		return (ft_exit(1));
+	
+	//step00 : 빈도수로 정렬하기
+	ptr = ft_sort(av);
+	//낮은 빈도수부터 트리에 집어넣는다?
 	run_tree(&t);
 	printf("전위순회\n");
 	pre_tree(t);
@@ -103,7 +140,5 @@ int	main(int ac, char **av)
 	post_tree(t);
 	printf("\n");
 
-
-	exit(0);
-	return 0;
+	return (ft_exit(0));
 }
