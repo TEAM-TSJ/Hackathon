@@ -27,9 +27,15 @@ typedef struct s_node
 */
 typedef struct	s_list
 {
-	int				data;//문자가 저장되는게 맞나....
+	char			data;//문자가 저장되는게 맞나....
+	int				count;
 	struct	s_list	*next;
 	struct	s_list	*prev;
 }				t_list;
+
+void 	viewer(t_list *frequency);
+
+void	ft_lst_back(t_list **list, t_list *new);
+t_list	*ft_lst(char value, int count);
 
 #endif

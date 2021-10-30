@@ -1,13 +1,14 @@
 #include "main.h"
 
-t_list	*ft_lst(int data)
+t_list	*ft_lst(char value, int count)
 {
 	t_list	*new_node;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
 		return (0);
-	new_node->data = data;
+	new_node->data = value;
+	new_node->count = count;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);
