@@ -30,7 +30,8 @@ void	run_tree(t_node **t)
 }
 
 /*
-** 전위방식이구 root->left->right순서대로 순회(역시나 재귀)
+** 전위방식(pre traversal)
+** root->left->right순서대로 순회(역시나 재귀)
 */
 void	pre_tree(t_node *t)
 {
@@ -46,7 +47,8 @@ void	pre_tree(t_node *t)
 }
 
 /*
-** 후위방식이구 left->right->root순서대로 순회(역시나 재귀)
+** 후위방식(post traversal)
+** left->right->root순서대로 순회(역시나 재귀)
 */
 void	post_tree(t_node *t)
 {
@@ -62,7 +64,8 @@ void	post_tree(t_node *t)
 }
 
 /*
-**  중위방식이구 left->root->right순서대로 순회(역시나 재귀)
+** 중위방식(inorder traversal)
+** left->root->right순서대로 순회(역시나 재귀)
 */
 void	mid_tree(t_node *t)
 {
