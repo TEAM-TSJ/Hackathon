@@ -33,9 +33,10 @@ typedef struct	s_list
 	struct	s_list	*prev;
 }				t_list;
 
-void 	viewer(t_list *frequency);
+void 	frequency_viewer(t_list *frequency);
 
 void	ft_lst_back(t_list **list, t_list *new);
 t_list	*ft_lst(char value, int count);
+void	pre_tree(t_node *t);
 
 #endif

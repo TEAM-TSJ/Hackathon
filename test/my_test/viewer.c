@@ -1,9 +1,11 @@
 #include "main.h"
 
-void viewer(t_list *frequency)
+void frequency_viewer(t_list *frequency)
 {
 	t_list *check = frequency;
 	int number = 1;
+	
+	printf("\033[0;32m빈도수 리스트 확인(리스트)\033[0m\n");
 	while(check)
 	{
 		printf("node num: %d\n", number);
@@ -16,5 +18,5 @@ void viewer(t_list *frequency)
 			break;
 		number++;
 	}
-	exit(0);
+	//exit(0);
 }
