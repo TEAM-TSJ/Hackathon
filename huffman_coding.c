@@ -66,11 +66,26 @@ void	make_lst(t_Node *lst, char *str) {
 	}
 }
 
+//리스트 정렬
+void	sort_lst(t_Node *lst, int sen_cnt) {
+	for (int i = 0; i < sen_cnt - 1; i++) {
+		for(int j = i + 1; j < sen_cnt; j++) {
+			if (lst[i].cnt > lst[j].cnt) {
+				t_Node tmp = lst[i];
+				lst[i] = lst[j];
+				lst[j] = tmp;
+			}
+		}
+	}
+}
+
 int main(void) {
-	char *str = "aaaaaavvvvv";
+	char *str = "aaaaabbbbcccdde";
+	int sen_cnt = get_word_num(str);
 
 	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str))) ;
 	make_lst(lst_node, str);
+	sort_lst(lst_node, sen_cnt);
 
 	for (int j = 0; j < get_word_num(str); j++)
 		printf("%d\n", lst_node[j].cnt);
