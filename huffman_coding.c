@@ -10,7 +10,7 @@ typedef struct	s_Node {
 
 //문자열에서 중복제거한 문자의 수
 int		get_word_num(char *str) {
-	char	check[100] = "";
+	char	check[130] = "";
 	int		ret = 1;
 
 	check[0] = str[0];
@@ -76,49 +76,70 @@ void	sort_lst(t_Node *lst, int sen_cnt) {
 
 int	stulen(t_Node *lst) {
 	int i = 0;
-	while (lst[i].c)
+	while (lst[i].cnt)
 		i++;
 	return (i);
 }
 
 t_Node *make_tree(t_Node *lst_node) {
-	t_Node min1 = lst_node[0];
-	t_Node min2 = lst_node[1];
-
 	t_Node tmp;
+	tmp.c = '\0';
 	tmp.cnt = lst_node[0].cnt + lst_node[1].cnt;
 	tmp.right = &lst_node[0];
 	tmp.left = &lst_node[1];
-
-	printf ("%c %c\n", tmp.left->c, tmp.right->c);
 
 	t_Node *ret = malloc((sizeof(t_Node) * stulen(lst_node)) - 1);
 	int i = 0;
 	for (i = 2; i < stulen(lst_node); i++) {
 		ret[i-2] = lst_node[i];
 	}
-	ret[i-2] = tmp;
+	ret[i - 2] = tmp;
 	return (ret);
+}
+
+void	pre_tree(t_Node *t)
+{
+	//재귀 브레이크 포인트
+	if (!t)
+	{
+		// printf("X \n");
+		return;
+	}
+	else
+	{
+		printf("%d ",t->cnt);
+		//printf("(0) 왼:");
+		pre_tree(t->left);
+		//printf("(1) 오:");
+		pre_tree(t->right);
+	}
 }
 
 int main(void) {
 	char *str = "aaaaabbbbcccdde";
 	int sen_cnt = get_word_num(str);
 
-	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str))) ;
+	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str)));
+	for (int i = 0; i < get_word_num(str); i++) {
+		lst_node[i].left = NULL;
+		lst_node[i].right = NULL;
+	}
 	make_lst(lst_node, str);
 	sort_lst(lst_node, sen_cnt);
 	
 	t_Node *result = malloc(sizeof(t_Node));
 	result = make_tree(lst_node);
+	sort_lst(lst_node, sen_cnt);
 
-	int i = stulen(lst_node);
-	printf("%d\n", i);
-
-	for (int j = 0; j < get_word_num(str); j++) {
-		printf("문자 : %c", lst_node[j].c);
-		printf("	개수 : %d\n", lst_node[j].cnt);
+	while (stulen(result) != 1) {
+		sort_lst(result, stulen(result));
+		result = make_tree(result);
+		sort_lst(result, stulen(result));
 	}
+
+	pre_tree(result);
+
+	
 	return 0;
 }
 
