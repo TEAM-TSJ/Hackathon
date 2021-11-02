@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+short stack[100];
+int pos = 0;
+int find = 0;
+
 typedef struct	s_Node {
 	int cnt;
 	char c;
+	int is_visit;
 	struct s_Node *left;
 	struct s_Node *right;
 }				t_Node;
@@ -84,6 +89,7 @@ int	stulen(t_Node *lst) {
 t_Node *make_tree(t_Node *lst_node) {
 	t_Node tmp;
 	tmp.c = '\0';
+	tmp.is_visit = 0;
 	tmp.cnt = lst_node[0].cnt + lst_node[1].cnt;
 	tmp.right = &lst_node[0];
 	tmp.left = &lst_node[1];
@@ -97,30 +103,70 @@ t_Node *make_tree(t_Node *lst_node) {
 	return (ret);
 }
 
+//전위순회
 void	pre_tree(t_Node *t)
 {
 	//재귀 브레이크 포인트
-	if (!t)
-	{
-		// printf("X \n");
+	if (!t) {
 		return;
 	}
-	else
-	{
+	else {
 		printf("%d ",t->cnt);
-		//printf("(0) 왼:");
 		pre_tree(t->left);
-		//printf("(1) 오:");
 		pre_tree(t->right);
 	}
 }
 
+//노드방문기록 제거
+void	clear_tree(t_Node *t)
+{
+	//재귀 브레이크 포인트
+	if (!t) {
+		return;
+	}
+	else {
+		t->is_visit = 0;
+		clear_tree(t->left);
+		clear_tree(t->right);
+	}
+}
+
+//
+void	find_char(t_Node *t, char ch)
+{
+	if (!t) {
+		stack[pos--] = -1;
+		return;
+	}
+	else if (t->c == ch) {
+		find = 1;
+		return;
+	}
+	else {
+		t->is_visit = 1;
+		if (!find && t->left && !t->left->is_visit) {
+			stack[pos++] = 0;
+			find_char(t->left, ch);
+			if (!find)
+				stack[pos--] = -1;
+		}
+		if (!find && t->right && !t->right->is_visit) {
+			stack[pos++] = 1;
+			find_char(t->right, ch);
+			if (!find)
+				stack[pos--] = -1;
+		}
+	}
+}
+
+
 int main(void) {
-	char *str = "aaaaabbbbcccdde";
+	char *str = "`1234567890-=	qwertyuiop[]asdfghjkl;'zxcvbnm,./";
 	int sen_cnt = get_word_num(str);
 
 	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str)));
 	for (int i = 0; i < get_word_num(str); i++) {
+		lst_node[i].is_visit = 0;
 		lst_node[i].left = NULL;
 		lst_node[i].right = NULL;
 	}
@@ -137,7 +183,29 @@ int main(void) {
 		sort_lst(result, stulen(result));
 	}
 
-	pre_tree(result);
+	//pre_tree(result);
+
+	//stack
+	int i = 0;
+	while (!stack[i])
+		stack[i++] = -1;
+	
+	i = 0;
+	int j = 0;
+	while (str[i]) {
+		pos = 0;
+		find = 0;
+		j = 0;
+		find_char(result, str[i]);
+		while (stack[j] != -1) {
+			printf("%d", stack[j]);
+			stack[j] = -1;
+			j++;
+		}
+		clear_tree(result);
+		printf("\n");
+		i++;
+	}
 
 	
 	return 0;
