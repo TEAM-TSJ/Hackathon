@@ -161,7 +161,13 @@ void	find_char(t_Node *t, char ch)
 
 
 int main(void) {
-	char *str = "`1234567890-=	qwertyuiop[]asdfghjkl;'zxcvbnm,./";
+
+	FILE *fp;
+	fp = fopen("test.txt", "r");
+	if (fp == NULL) printf("파일 열기 실패\n");
+	else printf("파일 열기 성공");
+
+	char *str = "aaaaabbbbcccdde";
 	int sen_cnt = get_word_num(str);
 
 	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str)));
@@ -203,11 +209,8 @@ int main(void) {
 			j++;
 		}
 		clear_tree(result);
-		printf("\n");
 		i++;
 	}
 
-	
 	return 0;
 }
-
