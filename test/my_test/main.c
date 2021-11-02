@@ -66,7 +66,7 @@ t_node *creat_tree(t_node *t, t_list *fre)
 	** min은 떼버린 정렬리스트, f는 합친 노드.인데... 합친노드가 필요없어지는거지. 주소를 가지고 있으니께.
 	*/
 	ft_fre_sort(fre);//정렬을 해줘야댕
-	printf("fre char %c\n", fre->data);
+	//printf("fre char %c\n", fre->data);
 	if (fre && !fre->next)//여기가 min은 있고 next노드가 없어야댐.
 	{
 		//min에 노드주소를 담아줄수있도록 구현해서 주소를 연결해주자.
@@ -93,6 +93,8 @@ t_node *creat_tree(t_node *t, t_list *fre)
 				// ㅇㅕ기에 들어가야하는 조건문은 붙여줘야하는게 부모노드인지를 확인해서, 부모노드면, 
 				f->right->data = fre->count;
 				f->right->value = fre->data;
+				printf("lvalue: %c\n", f->right->value);
+				printf("ldata: %c", fre->data);
 			}
 			if (fre->next->addr)
 				f->left = fre->next->addr;
@@ -101,6 +103,8 @@ t_node *creat_tree(t_node *t, t_list *fre)
 				f->left = (t_node *)malloc(sizeof(t_node));
 				f->left->data = fre->next->count;
 				f->left->value = fre->next->data;
+				printf("rvalue: %c\n", f->right->value);
+				printf("rdata: %c", fre->data);
 			}
 			f->data = fre->count + fre->next->count;
 			//합친거에 대해서 리스트 제거해주기
@@ -112,7 +116,7 @@ t_node *creat_tree(t_node *t, t_list *fre)
 		}
 		//else
 		{
-			printf("일단은 에러\n");
+			//printf("일단은 에러\n");
 		}
 	// 위처럼 합친후에 추가되어야 하는게, 노드 정도를 기입해서 새로운 리스트노드를 만들고 min에 addback
 		ft_lst_back(&fre ,ft_lst('\0', f->data, f));// 문자정보, 빈도수, 노드주소,
@@ -219,30 +223,99 @@ void	search_tree(t_node *t, int fre)
 	}
 }
 
-void	encode(t_node *t, char str, int fre)
-{//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
+// void	encode(t_node *t, char str, int fre)
+// {//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
+// 	// 재귀 브레이크 포인트
+// 	// 음.. 부모노드면, left부터 돌면서 출력하게 하고,
+// 	// 마지막 잎새노드면(더이상 자식이없으면) 그게 문자랑 같을때 출력 아니면 대기. 
+// 	//printf("ggg : %d\n", fre);
+// 	if (!t)
+// 		return;
+// 	else
+// 	{
+// 		if(!t->left && !t->right && fre == t->data && str == t->value)
+// 		{
+// 			return;
+// 		}
+// 		if(t->left && fre == t->left->data && str == t->left->value)
+// 		{
+// 			printf("0");
+// 			encode(t->left, str, fre);
+// 			return;
+// 		}
+// 		if(t->left && t->right)
+// 		{
+// 			printf("1");
+// 			encode(t->right, str, fre);
+// 		}
+// 	}
+// }
+
+void	encode(t_node *t, t_list *pre, char str, int fre)
+{
+	t_list *new;
+	t_list *tmp;
+	static int check;
+	//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
 	// 재귀 브레이크 포인트
 	// 음.. 부모노드면, left부터 돌면서 출력하게 하고,
 	// 마지막 잎새노드면(더이상 자식이없으면) 그게 문자랑 같을때 출력 아니면 대기. 
 	//printf("ggg : %d\n", fre);
+	// 인코딩자료 남은거 별도처리.. 2비트남은경우 1바이트 새롭게 따서.
 	if (!t)
+	{
+		check = 0;
 		return;
+	}
 	else
 	{
-		if(!t->left && !t->right && fre == t->data && str == t->value)
+		if(!t->left && !t->right && str == t->value)
 		{
+			printf("\nstr: %c, t->value %c\n", str, t->value);
+			//printf("fre: %d, t->data: %d\n", fre, t->data);
+			check = 1;
+			tmp = (pre);
+			while(tmp->next)
+			{
+				if (tmp->count >= 0)
+					printf("%d", tmp->count);
+				else
+					printf(" ");
+				tmp = tmp->next;
+				if (tmp->prev)
+					free(tmp->prev);
+			}
 			return;
 		}
-		if(t->left && fre == t->left->data && str == t->left->value)
+		else // 열어봤는데 결국 아니란 말이지.
 		{
-			printf("0");
-			encode(t->left, str, fre);
-			return;
+
 		}
-		if(t->left && t->right)
+		if(t->left)
 		{
-			printf("1");
-			encode(t->right, str, fre);
+			//printf("0");
+			if (t->left && !t->left->value)
+			{
+				new = ft_lst('\0', 0, 0);
+				ft_lst_back(&pre, new);
+			}
+			// printf("\n data: %c : %c\n",t->value, str);
+			// if (t->value)
+			// 	printf("\nt->value %c\n", t->value);
+			encode(t->left, pre, str, fre);
+		}
+		if(t->right)
+		{
+			//printf("1");
+			if (t->right && !t->right->value && check != 1)
+			{
+				new = ft_lst('\0', 1, 0);
+				ft_lst_back(&pre, new);
+			}
+			// if (t->value)
+			// 	printf("\nt->value %c\n", t->value);
+			//printf("\n data: %c\n",t->value);
+			encode(t->right, pre, str, fre);
 		}
 	}
 }
@@ -355,18 +428,18 @@ t_list *ft_fre_sort(t_list *fre)
 		node_cnt++;
 		tmp = tmp->next;
 	}
-	printf("\n--------info, node size :%d-----\n", node_cnt);
+	// printf("\n--------info, node size :%d-----\n", node_cnt);
 
-	// 들어가 있는 내용 확인.
-	tmp = fre;
-	int h = -1;
-	while(tmp)
-	{
-		printf("문자 : %c\n",tmp->data);
-		printf("빈도수 : %d\n",tmp->count);
-		printf("노드주소 : %p\n",tmp->addr);
-		tmp = tmp->next;
-	}
+	// // 들어가 있는 내용 확인.
+	// tmp = fre;
+	// int h = -1;
+	// while(tmp)
+	// {
+	// 	printf("문자 : %c\n",tmp->data);
+	// 	printf("빈도수 : %d\n",tmp->count);
+	// 	printf("노드주소 : %p\n",tmp->addr);
+	// 	tmp = tmp->next;
+	// }
 
 	// 스왑(버블정렬)
 	int idx = -1;
@@ -403,25 +476,25 @@ t_list *ft_fre_sort(t_list *fre)
 
 	}
 
-	tmp = fre;
-	node_cnt = 0;
-	while (tmp)
-	{
-		node_cnt++;
-		tmp = tmp->next;
-	}
-	printf("\n--------info, node size :%d-----\n", node_cnt);
+	// tmp = fre;
+	// node_cnt = 0;
+	// while (tmp)
+	// {
+	// 	node_cnt++;
+	// 	tmp = tmp->next;
+	// }
+	// printf("\n--------info, node size :%d-----\n", node_cnt);
 	
-	//viwer
-	tmp = fre;
-	h = -1;
-	while(tmp)
-	{
-		printf("문자 : %c\n",tmp->data);
-		printf("빈도수 : %d\n",tmp->count);
-		printf("노드주소 : %p\n",tmp->addr);
-		tmp = tmp->next;
-	}
+	// //viwer
+	// tmp = fre;
+	// h = -1;
+	// while(tmp)
+	// {
+	// 	printf("문자 : %c\n",tmp->data);
+	// 	printf("빈도수 : %d\n",tmp->count);
+	// 	printf("노드주소 : %p\n",tmp->addr);
+	// 	tmp = tmp->next;
+	// }
 	return(fre);
 }
 
@@ -508,12 +581,13 @@ t_node *ft_huffman(t_list *fre, char *str)
 	// // search_tree(t, 3);
 	// // search_tree(t, 4);
 
-	printf("\033[0;32m인코드\033[0m\n");
+	t_list *temp = ft_lst('\0', -1, 0);
+	printf("\033[0;32m인코드\033[0m\n");// 논리구조 바꿔야댐 트리구조가 바꼈으니까.
 	int j = -1;
 	while (str[++j])
-		encode(t, str[j], fre_check(str[j], fre));//빈도수뱉게
-	// printf("\n");
-	// printf("\n");
+		encode(t, temp, str[j], fre_check(str[j], fre));//빈도수뱉게
+	printf("\n");
+	printf("\n");
 	return (t);
 	// //부모트리를 만들어서 붙힘. 오른쪽 왼쪽순.
 }
