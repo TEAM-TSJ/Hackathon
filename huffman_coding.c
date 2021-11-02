@@ -4,8 +4,8 @@
 typedef struct	s_Node {
 	int cnt;
 	char c;
-	struct Node *left;
-	struct Node *right;
+	struct s_Node *left;
+	struct s_Node *right;
 }				t_Node;
 
 //문자열에서 중복제거한 문자의 수
@@ -79,6 +79,26 @@ int	stulen(t_Node *lst) {
 	while (lst[i].c)
 		i++;
 	return (i);
+}
+
+t_Node *make_tree(t_Node *lst_node) {
+	t_Node min1 = lst_node[0];
+	t_Node min2 = lst_node[1];
+
+	t_Node tmp;
+	tmp.cnt = lst_node[0].cnt + lst_node[1].cnt;
+	tmp.right = &lst_node[0];
+	tmp.left = &lst_node[1];
+
+	printf ("%c %c\n", tmp.left->c, tmp.right->c);
+
+	t_Node *ret = malloc((sizeof(t_Node) * stulen(lst_node)) - 1);
+	int i = 0;
+	for (i = 2; i < stulen(lst_node); i++) {
+		ret[i-2] = lst_node[i];
+	}
+	ret[i-2] = tmp;
+	return (ret);
 }
 
 int main(void) {
