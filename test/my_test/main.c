@@ -1,8 +1,8 @@
 #include "main.h"
-
 /*
 ** 재귀형태로 구현되는구나 일반적인 동작은
 */
+
 // void	run_tree(t_node **t)
 // {
 // 	char value;
@@ -251,11 +251,12 @@ void	search_tree(t_node *t, int fre)
 // 	}
 // }
 
-void	encode(t_node *t, t_list *pre, char str, int fre)
+t_node	*encode(t_node *t, t_list *pre, char str, int fre)
 {
 	t_list *new;
 	t_list *tmp;
-	static int check;
+	t_node *val;
+
 	//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
 	// 재귀 브레이크 포인트
 	// 음.. 부모노드면, left부터 돌면서 출력하게 하고,
@@ -263,17 +264,13 @@ void	encode(t_node *t, t_list *pre, char str, int fre)
 	//printf("ggg : %d\n", fre);
 	// 인코딩자료 남은거 별도처리.. 2비트남은경우 1바이트 새롭게 따서.
 	if (!t)
-	{
-		check = 0;
-		return;
-	}
+		return (t);
 	else
 	{
 		if(!t->left && !t->right && str == t->value)
 		{
-			printf("\nstr: %c, t->value %c\n", str, t->value);
-			//printf("fre: %d, t->data: %d\n", fre, t->data);
-			check = 1;
+			// printf("\nstr: %c, t->value %c\n", str, t->value);
+			// //printf("fre: %d, t->data: %d\n", fre, t->data);
 			tmp = (pre);
 			while(tmp->next)
 			{
@@ -282,19 +279,21 @@ void	encode(t_node *t, t_list *pre, char str, int fre)
 				else
 					printf(" ");
 				tmp = tmp->next;
-				if (tmp->prev)
-					free(tmp->prev);
+				// if (tmp->prev)
+				// 	free(tmp->prev);
 			}
-			return;
+			return (t);
 		}
 		else // 열어봤는데 결국 아니란 말이지.
 		{
-
+				printf("!!!! :%d\n", t->data);
+				printf("hihihihihihi\n");
 		}
 		if(t->left)
 		{
 			//printf("0");
-			if (t->left && !t->left->value)
+			printf("? :%c\n", t->value);
+			if (t->left && t->left->value != str)
 			{
 				new = ft_lst('\0', 0, 0);
 				ft_lst_back(&pre, new);
@@ -302,22 +301,23 @@ void	encode(t_node *t, t_list *pre, char str, int fre)
 			// printf("\n data: %c : %c\n",t->value, str);
 			// if (t->value)
 			// 	printf("\nt->value %c\n", t->value);
-			encode(t->left, pre, str, fre);
+			val = encode(t->left, pre, str, fre);
 		}
-		if(t->right)
+		if(t->right && val->value != str)
 		{
 			//printf("1");
-			if (t->right && !t->right->value && check != 1)
+			if (t->right && !t->right->value)
 			{
 				new = ft_lst('\0', 1, 0);
 				ft_lst_back(&pre, new);
 			}
 			// if (t->value)
 			// 	printf("\nt->value %c\n", t->value);
-			//printf("\n data: %c\n",t->value);
-			encode(t->right, pre, str, fre);
+			// printf("\n data: %c\n",t->value);
+			val = encode(t->right, pre, str, fre);
 		}
 	}
+	return (val);
 }
 
 /*
@@ -498,6 +498,46 @@ t_list *ft_fre_sort(t_list *fre)
 	return(fre);
 }
 
+void	find_char(t_node *t, char ch)
+{
+	if (!t) {
+		stack[pos--] = -1;
+		return;
+	}
+	else if (t->value == ch) {
+		find = 1;
+		return;
+	}
+	else {
+		t->is_visit = 1;
+		if (!find && t->left && !t->left->is_visit) {
+			stack[pos++] = 0;
+			find_char(t->left, ch);
+			if (!find)
+				stack[pos--] = -1;
+		}
+		if (!find && t->right && !t->right->is_visit) {
+			stack[pos++] = 1;
+			find_char(t->right, ch);
+			if (!find)
+				stack[pos--] = -1;
+		}
+	}
+}
+
+void	clear_tree(t_node *t)
+{
+	//재귀 브레이크 포인트
+	if (!t) {
+		return;
+	}
+	else {
+		t->is_visit = 0;
+		clear_tree(t->left);
+		clear_tree(t->right);
+	}
+}
+
 t_node *ft_huffman(t_list *fre, char *str)
 {
 	t_node *t;
@@ -526,7 +566,7 @@ t_node *ft_huffman(t_list *fre, char *str)
 		f = (t_node *)malloc(sizeof(t_node));
 		f->left = (t_node *)malloc(sizeof(t_node));
 		f->right = (t_node *)malloc(sizeof(t_node));
-
+		f->is_visit = 0;
 		//프리퀀시에 이만큼에 문자가 없으면 터질수밖에 없지(첫번째 세그폴트 지점)
 		//./test jjkkkdddsss
 		f->left->data = min->next->count;
@@ -581,11 +621,31 @@ t_node *ft_huffman(t_list *fre, char *str)
 	// // search_tree(t, 3);
 	// // search_tree(t, 4);
 
-	t_list *temp = ft_lst('\0', -1, 0);
+	//t_list *temp = ft_lst('\0', -1, 0);
 	printf("\033[0;32m인코드\033[0m\n");// 논리구조 바꿔야댐 트리구조가 바꼈으니까.
-	int j = -1;
-	while (str[++j])
-		encode(t, temp, str[j], fre_check(str[j], fre));//빈도수뱉게
+	//printf("값 %c\n",t->left->left->value);
+	//while (str[++j])
+	// encode(t, temp, str[1], fre_check(str[j], fre));//빈도수뱉게
+	int i = 0;
+	while (!stack[i])
+		stack[i++] = -1;
+	
+	i = 0;
+	int j = 0;
+	while (str[i]) {
+		pos = 0;
+		find = 0;
+		j = 0;
+		find_char(t, str[i]);
+		while (stack[j] != -1) {
+			printf("%d", stack[j]);
+			stack[j] = -1;
+			j++;
+		}
+		clear_tree(t);
+		//printf("\n");
+		i++;
+	}
 	printf("\n");
 	printf("\n");
 	return (t);
