@@ -1,6 +1,6 @@
 #include "main.h"
 
-t_list	*ft_lst(char value, int count)
+t_list	*ft_lst(char value, int count, t_node *addr)
 {
 	t_list	*new_node;
 
@@ -9,6 +9,7 @@ t_list	*ft_lst(char value, int count)
 		return (0);
 	new_node->data = value;
 	new_node->count = count;
+	new_node->addr = addr;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);
