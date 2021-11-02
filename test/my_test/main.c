@@ -47,39 +47,131 @@
 // 		pre_tree(t->right);
 // 	}
 // }
-t_node *creat_tree(t_node *t, t_node *f, t_list *min)
+
+/*
+** tree를 결국 여기서 뻗어줌
+** 부모노드의 빈도수를 저장하고, 다시 빈도수 리스트랑 우선순위를 판별한후 두개를 착출해서 큰걸 오른쪽에 붙히는 방식.
+*/
+t_node *creat_tree(t_node *t, t_list *fre)
 {
-	t_node *n;
-	//min의 데이터로 새노드를 만들고 f랑 합쳐주는 재귀함수(이진트리공식)
-	//f가 빈도수 낮은애들을 자식으로 가지고 있는 부모노드
-	if (!min)//일단 Null 재귀의 브레이크 포인트로 설정해놓고,
+	t_node *f = NULL;
+	t_list *tmp = NULL;
+
+	/*
+	** step00. 빈도수 리스트 min에 대해서 여기 들어올때마다 정렬을 수행한다.
+	** step01. min에 연결된 노드가 두개 이상이면, 두개를 바탕으로 새로운 노드를 생성한다. (생성한 노드의 정보를 담은 리스트를 추가한다)
+	** step02. 생성된 노드에 min의 우선순위 두개를 연결한다.(데이터 기반, 주소도 가지고 있는게 좋겟음)
+	** step03. 다시 creat_tree를 호출한다.
+	** 언제까지?? -> min에 연결된 노드가 하나밖에 없을때까지.
+	** min은 떼버린 정렬리스트, f는 합친 노드.인데... 합친노드가 필요없어지는거지. 주소를 가지고 있으니께.
+	*/
+	ft_fre_sort(fre);//정렬을 해줘야댕
+	printf("fre char %c\n", fre->data);
+	if (fre && !fre->next)//여기가 min은 있고 next노드가 없어야댐.
 	{
-		//printf("top111 data : %d\n", f->data);
-		t = f;
+		//min에 노드주소를 담아줄수있도록 구현해서 주소를 연결해주자.
+		t = fre->addr;//
+		//pre_tree(t);
 		return(t);
 	}
 	else//아직 합칠데이터가 있다는 의미랑 같아
 	{
-		//새노드생성
-		n = (t_node *)malloc(sizeof(t_node));
-		//(*t)->data = total;//빈도수 합
-		n->data = min->count + f->data;
-		// printf("min->count %d\n", min->count);
-		// printf("f->data %d\n", f->data);
-		// printf("n->data %d\n", n->data);
-		// 새로만든 min의빈도수랑 데이타의합, 재귀할때마다 오른쪽 노드가 됨.
-		n->left = (t_node *)malloc(sizeof(t_node));
-		n->left->data = min->count;
-		n->left->value = min->data;
-		n->left->left = NULL;//왼쪽엔 뭐 두지마.
-		n->left->right = NULL;//무조건 오른쪽만 자식을 달아줘
+		//if (fre && fre->next)
+		{
+			f = (t_node *)malloc(sizeof(t_node));
+			// f->left = (t_node *)malloc(sizeof(t_node));
+			// f->right = (t_node *)malloc(sizeof(t_node));
 
-		n->right = (t_node *)malloc(sizeof(t_node));
-		n->right = f;
-		t = creat_tree(t, n, min->next);
+			//프리퀀시에 이만큼에 문자가 없으면 터질수밖에 없지(첫번째 세그폴트 지점)
+			//./test jjkkkdddsss
+			if (fre->addr)
+				f->right = fre->addr;
+			else
+			{
+				f->right = (t_node *)malloc(sizeof(t_node));
+				/// fre->next->count는 오른쪽 노드의 빈도수가 아니라, 부모노드의 빈도수일경우가 존재함. 고칠것.
+				// ㅇㅕ기에 들어가야하는 조건문은 붙여줘야하는게 부모노드인지를 확인해서, 부모노드면, 
+				f->right->data = fre->count;
+				f->right->value = fre->data;
+			}
+			if (fre->next->addr)
+				f->left = fre->next->addr;
+			else
+			{
+				f->left = (t_node *)malloc(sizeof(t_node));
+				f->left->data = fre->next->count;
+				f->left->value = fre->next->data;
+			}
+			f->data = fre->count + fre->next->count;
+			//합친거에 대해서 리스트 제거해주기
+			//지금 합친게 min이랑 min->next니까
+			tmp = fre;
+			fre = fre->next->next;
+			free(tmp->next);
+			free(tmp);
+		}
+		//else
+		{
+			printf("일단은 에러\n");
+		}
+	// 위처럼 합친후에 추가되어야 하는게, 노드 정도를 기입해서 새로운 리스트노드를 만들고 min에 addback
+		ft_lst_back(&fre ,ft_lst('\0', f->data, f));// 문자정보, 빈도수, 노드주소,
+
+		//근데지금 문제가 .. 합친것들은 리스트에서 제거를 해줘야댐
+		//addback result -> 
+		printf(GREEN_COLOR);
+		printf("\naddback result \n");
+		printf(END_COLOR);
+		ft_fre_sort(fre);
+		// n = (t_node *)malloc(sizeof(t_node));
+		// //(*t)->data = total;//빈도수 합
+		// n->data = min->count + f->data;
+		// n->left = (t_node *)malloc(sizeof(t_node));
+		// n->left->data = min->count;
+		// n->left->value = min->data;
+		// n->left->left = NULL;//왼쪽엔 뭐 두지마.
+		// n->left->right = NULL;//무조건 오른쪽만 자식을 달아줘
+
+		// n->right = (t_node *)malloc(sizeof(t_node));
+		// n->right = f;
+		t = creat_tree(t, fre);
 	}
 	return(t);
 }
+
+// t_node *creat_tree(t_node *t, t_node *f, t_list *min)
+// {
+// 	t_node *n;
+// 	//min의 데이터로 새노드를 만들고 f랑 합쳐주는 재귀함수(이진트리공식)
+// 	//f가 빈도수 낮은애들을 자식으로 가지고 있는 부모노드
+// 	if (!min)//일단 Null 재귀의 브레이크 포인트로 설정해놓고,
+// 	{
+// 		//printf("top111 data : %d\n", f->data);
+// 		t = f;
+// 		return(t);
+// 	}
+// 	else//아직 합칠데이터가 있다는 의미랑 같아
+// 	{
+// 		//새노드생성
+// 		n = (t_node *)malloc(sizeof(t_node));
+// 		//(*t)->data = total;//빈도수 합
+// 		n->data = min->count + f->data;
+// 		// printf("min->count %d\n", min->count);
+// 		// printf("f->data %d\n", f->data);
+// 		// printf("n->data %d\n", n->data);
+// 		// 새로만든 min의빈도수랑 데이타의합, 재귀할때마다 오른쪽 노드가 됨.
+// 		n->left = (t_node *)malloc(sizeof(t_node));
+// 		n->left->data = min->count;
+// 		n->left->value = min->data;
+// 		n->left->left = NULL;//왼쪽엔 뭐 두지마.
+// 		n->left->right = NULL;//무조건 오른쪽만 자식을 달아줘
+
+// 		n->right = (t_node *)malloc(sizeof(t_node));
+// 		n->right = f;
+// 		t = creat_tree(t, n, min->next);
+// 	}
+// 	return(t);
+// }
 
 /*
 ** 전위방식(pre traversal)
@@ -128,8 +220,10 @@ void	search_tree(t_node *t, int fre)
 }
 
 void	encode(t_node *t, char str, int fre)
-{
-	//재귀 브레이크 포인트
+{//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
+	// 재귀 브레이크 포인트
+	// 음.. 부모노드면, left부터 돌면서 출력하게 하고,
+	// 마지막 잎새노드면(더이상 자식이없으면) 그게 문자랑 같을때 출력 아니면 대기. 
 	//printf("ggg : %d\n", fre);
 	if (!t)
 		return;
@@ -146,8 +240,10 @@ void	encode(t_node *t, char str, int fre)
 			return;
 		}
 		if(t->left && t->right)
+		{
 			printf("1");
-		encode(t->right, str, fre);
+			encode(t->right, str, fre);
+		}
 	}
 }
 
@@ -220,9 +316,9 @@ t_list *ft_frequency(char *ch)
 		if (!(jdx < idx && ch[jdx] == ch[idx]))
 		{
 			if (!frequency)
-				frequency = ft_lst(ch[idx], count);	
+				frequency = ft_lst(ch[idx], count, NULL);	
 			else
-				new = ft_lst(ch[idx], count);
+				new = ft_lst(ch[idx], count, NULL);
 			ft_lst_back(&frequency, new);	
 		}
 	}
@@ -243,26 +339,36 @@ int fre_check(char value, t_list *fre)
 	return (-1);
 }
 
+/*
+** 리스트에 노드정보에 대한 주소가 추가되었기때문에, 그거 추가할것.
+*/
 t_list *ft_fre_sort(t_list *fre)
 {
 	t_list *tmp = 0;
 	t_list swp;
 	int		node_cnt = 0;
 
+	// 여기서 길이 측정.
 	tmp = fre;
 	while (tmp)
 	{
 		node_cnt++;
 		tmp = tmp->next;
 	}
+	printf("\n--------info, node size :%d-----\n", node_cnt);
+
+	// 들어가 있는 내용 확인.
 	tmp = fre;
 	int h = -1;
 	while(tmp)
 	{
 		printf("문자 : %c\n",tmp->data);
 		printf("빈도수 : %d\n",tmp->count);
+		printf("노드주소 : %p\n",tmp->addr);
 		tmp = tmp->next;
 	}
+
+	// 스왑(버블정렬)
 	int idx = -1;
 	while(++idx < node_cnt)
 	{
@@ -272,10 +378,15 @@ t_list *ft_fre_sort(t_list *fre)
 		{
 			if (tmp->next && (tmp->count > tmp->next->count))
 			{
-				swp.data = tmp->data;// 탑노드랑 넥스트노드를 스왑하는과정을 하는 함수를 cnt만큼 반복
+				swp.addr = tmp->addr;
+				swp.data = tmp->data;
 				swp.count = tmp->count;
+				
+				tmp->addr = tmp->next->addr;
 				tmp->data = tmp->next->data;
 				tmp->count = tmp->next->count;
+				
+				tmp->next->addr = swp.addr;
 				tmp->next->data = swp.data;
 				tmp->next->count = swp.count;
 			}
@@ -291,7 +402,16 @@ t_list *ft_fre_sort(t_list *fre)
 		
 
 	}
-	printf("node size :%d\n", node_cnt);
+
+	tmp = fre;
+	node_cnt = 0;
+	while (tmp)
+	{
+		node_cnt++;
+		tmp = tmp->next;
+	}
+	printf("\n--------info, node size :%d-----\n", node_cnt);
+	
 	//viwer
 	tmp = fre;
 	h = -1;
@@ -299,6 +419,7 @@ t_list *ft_fre_sort(t_list *fre)
 	{
 		printf("문자 : %c\n",tmp->data);
 		printf("빈도수 : %d\n",tmp->count);
+		printf("노드주소 : %p\n",tmp->addr);
 		tmp = tmp->next;
 	}
 	return(fre);
@@ -306,21 +427,14 @@ t_list *ft_fre_sort(t_list *fre)
 
 t_node *ft_huffman(t_list *fre, char *str)
 {
-	//
 	t_node *t;
 	t_node *f;
 
-	// 가장작은 값 2개를 골라
 	t_list *min;
-	t_list *min2;
 
 	//빈도수가 낮은 노드를 뽑아내고
 	//while((min = min_fre(fre)) > 0)
 	min = fre;
-
-	//min->count;//가장작은 빈도수가 될것임
-	//min->next->count;// 그다음 작은 빈도수가 될거임
-
 	/*
 	** 수정안 : 리스트에서 부모노드를 생성할때마다 부모노드를 기준으로하는 빈도수정렬을 다시 수행함
 	** 언제까지? 탐노드 하나남을때까지.
@@ -332,46 +446,76 @@ t_node *ft_huffman(t_list *fre, char *str)
 	// 노드를 하나생성해서 쟤네를 이어주고 트리를 만들어주는거에 넣어줘보자(널가드는 일단 신경쓰지말고)
 	// 이렇게 하면 제일 작은거에 대해서 기본적으로 이어붙힐 뼈대가 된거잖아 그럼 크리에이트로 들어가서는
 	// 이제 재귀로 얘랑 min데이터를 하나씩 묶어주기만 하면 됨 언제까지? min데이터가 끝날때까지
-	f = (t_node *)malloc(sizeof(t_node));
-	f->left = (t_node *)malloc(sizeof(t_node));
-	f->right = (t_node *)malloc(sizeof(t_node));
+	
+	//여기가 작은거 두개를 뽑아내서 노드를 생성해주는 부분이네.
+	if (min && min->next)
+	{
+		f = (t_node *)malloc(sizeof(t_node));
+		f->left = (t_node *)malloc(sizeof(t_node));
+		f->right = (t_node *)malloc(sizeof(t_node));
 
-	//프리퀀시에 이만큼에 문자가 없으면 터질수밖에 없지(첫번째 세그폴트 지점)
-	//./test jjkkkdddsss
-
-	f->left->data = min->next->count;
-	f->left->value = min->next->data;
-	f->right->data = min->count;
-	f->right->value = min->data;
-	f->data = min->count + min->next->count;
-
+		//프리퀀시에 이만큼에 문자가 없으면 터질수밖에 없지(첫번째 세그폴트 지점)
+		//./test jjkkkdddsss
+		f->left->data = min->next->count;
+		f->left->value = min->next->data;
+		f->right->data = min->count;
+		f->right->value = min->data;
+		f->data = min->count + min->next->count;
+		//합친거에 대해서 리스트 제거해주기
+		//지금 합친게 min이랑 min->next니까
+		fre = min->next->next;
+		free(min->next);
+		free(min);
+	}
+	else
+	{
+		printf("일단은 에러\n");
+	}
+	// 위처럼 합친후에 추가되어야 하는게, 노드 정도를 기입해서 새로운 리스트노드를 만들고 min에 addback
+	ft_lst_back(&fre ,ft_lst('\0', f->data, f));// 문자정보, 빈도수, 노드주소,
+	
+	//근데지금 문제가 .. 합친것들은 리스트에서 제거를 해줘야댐
+	//addback result -> 
+	printf(GREEN_COLOR);
+	printf("\naddback result \n");
+	printf(END_COLOR);
+	ft_fre_sort(fre);
 	// 만약 f의 데이터값이(빈도수가) 보다 작은게 두개있으면 그두개를 부모노드로 묶어줌
-	// 두개의 부모노드가 
+	// 두개의 부모노드가
 
-	t = creat_tree(t, f, min->next->next);
+	t = creat_tree(t, fre);//최소두개 떼버린 리스트랑 그거 합친새노드f
 
-	// printf("top data t : %d\n", t->data);
-	printf("\n");
-	printf("\033[0;32m이진트리 정상작동 확인(전위순회)\033[0m\n");
+	// // printf("top data t : %d\n", t->data);
+	// printf("\n");
+	printf("\033[0;32m이진트리 정상작동 확인(전위순회): 루왼오\033[0m\n");
 	pre_tree(t);
 	printf("\n");
 	printf("\n");
-
-	// printf("\033[0;32m접두어코드\033[0m\n");
-	// search_tree(t, 1);
-	// search_tree(t, 2);
-	// search_tree(t, 3);
-	// search_tree(t, 4);
-
+	
+	printf("중위순회: 왼루오\n");	
+	mid_tree(t);
 	printf("\n");
+	printf("\n");
+
+	printf("후위순회: 왼오루\n");
+	post_tree(t);
+	printf("\n");
+	printf("\n");
+
+	// // printf("\033[0;32m접두어코드\033[0m\n");
+	// // search_tree(t, 1);
+	// // search_tree(t, 2);
+	// // search_tree(t, 3);
+	// // search_tree(t, 4);
+
 	printf("\033[0;32m인코드\033[0m\n");
 	int j = -1;
 	while (str[++j])
 		encode(t, str[j], fre_check(str[j], fre));//빈도수뱉게
-	printf("\n");
-	printf("\n");
+	// printf("\n");
+	// printf("\n");
 	return (t);
-	//부모트리를 만들어서 붙힘. 오른쪽 왼쪽순.
+	// //부모트리를 만들어서 붙힘. 오른쪽 왼쪽순.
 }
 
 /*
@@ -397,11 +541,11 @@ int	main(int ac, char **av)
 	fre = ft_frequency(av[1]);
 	
 	//일단 제대로 저장되나 찍어보자 viewer
-	ft_fre_sort(fre);
+	ft_fre_sort(fre);// 검증완료
 	//난 문자별로 빈도수가 적힌 리스트가 있고(fre), 원래 문자열을 알고있어(av)
 	//허프만에서는 쟤네를 이진트리로 집어넣어야해, 빈도수가 낮은게 1오른쪽자식 높은게 0왼쪽자식이야.
 	ft_huffman(fre, av[1]);
-	frequency_viewer(fre);
+	// frequency_viewer(fre);
 	
 	//printf("top value: %d", t->data);
 	// run_tree(&t);
@@ -410,13 +554,13 @@ int	main(int ac, char **av)
 	// printf("\n");
 	exit(0);
 
-	// printf("중위순회\n");	
-	// mid_tree(t);
-	// printf("\n");
-	
-	// printf("후위순회\n");
-	// post_tree(t);
-	// printf("\n");
 
 	return (ft_exit(0));
 }
+// printf("중위순회\n");	
+// mid_tree(t);
+// printf("\n");
+
+// printf("후위순회\n");
+// post_tree(t);
+// printf("\n");

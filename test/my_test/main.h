@@ -6,6 +6,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define GREEN_COLOR "\033[0;32m"
+# define  END_COLOR "\033[0m"
+
 /*
 ** 이렇게 내맘대로 구조체로 찍어내는게 아니고 이진트리부터 정확하게 구현할줄 알아야겠다.
 ** 이진트리 : 모든 노드가 2개의 서브트리를 가지고 있는 트리이다.
@@ -28,16 +31,19 @@ typedef struct s_node
 */
 typedef struct	s_list
 {
-	char			data;//문자가 저장되는게 맞나....
-	int				count;
-	struct	s_list	*next;
-	struct	s_list	*prev;
+	char			data;//문자정보;
+	t_node			*addr;//생성된노드의 주소;
+	int				count;//노드의 빈도수 -> 부모노드일경우 자식들의 빈도수의 합이 될것임.
+
+	struct	s_list	*next;//빈도수가 더 높은게 뒤로 위치하게 될것임
+	struct	s_list	*prev;//음... 푸시스왑때 쓰던거고, 지금은 안쓰고 있어서 빼도 되긴함 일단 킵.
 }				t_list;
 
 void 	frequency_viewer(t_list *frequency);
 
 void	ft_lst_back(t_list **list, t_list *new);
-t_list	*ft_lst(char value, int count);
+t_list	*ft_lst(char value, int count, t_node *addr);
 void	pre_tree(t_node *t);
+t_list *ft_fre_sort(t_list *fre);
 
 #endif
