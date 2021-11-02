@@ -13,6 +13,7 @@
 typedef struct s_node
 {
 	int		data;
+	char	value;
 	struct s_node *left;
 	struct s_node *right;
 

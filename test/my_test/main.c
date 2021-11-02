@@ -70,6 +70,7 @@ t_node *creat_tree(t_node *t, t_node *f, t_list *min)
 		// 새로만든 min의빈도수랑 데이타의합, 재귀할때마다 오른쪽 노드가 됨.
 		n->left = (t_node *)malloc(sizeof(t_node));
 		n->left->data = min->count;
+		n->left->value = min->data;
 		n->left->left = NULL;//왼쪽엔 뭐 두지마.
 		n->left->right = NULL;//무조건 오른쪽만 자식을 달아줘
 
@@ -126,7 +127,7 @@ void	search_tree(t_node *t, int fre)
 	}
 }
 
-void	encode(t_node *t, int fre)
+void	encode(t_node *t, char str, int fre)
 {
 	//재귀 브레이크 포인트
 	//printf("ggg : %d\n", fre);
@@ -134,19 +135,19 @@ void	encode(t_node *t, int fre)
 		return;
 	else
 	{
-		if(!t->left && !t->right && fre == t->data)
+		if(!t->left && !t->right && fre == t->data && str == t->value)
 		{
 			return;
 		}
-		if(t->left && fre == t->left->data)
+		if(t->left && fre == t->left->data && str == t->left->value)
 		{
 			printf("0");
-			encode(t->left, fre);
+			encode(t->left, str, fre);
 			return;
 		}
 		if(t->left && t->right)
 			printf("1");
-		encode(t->right, fre);
+		encode(t->right, str, fre);
 	}
 }
 
@@ -245,6 +246,7 @@ int fre_check(char value, t_list *fre)
 t_list *ft_fre_sort(t_list *fre)
 {
 	t_list *tmp = 0;
+	t_list swp;
 	int		node_cnt = 0;
 
 	tmp = fre;
@@ -253,21 +255,52 @@ t_list *ft_fre_sort(t_list *fre)
 		node_cnt++;
 		tmp = tmp->next;
 	}
-
 	tmp = fre;
+	int h = -1;
+	while(tmp)
+	{
+		printf("문자 : %c\n",tmp->data);
+		printf("빈도수 : %d\n",tmp->count);
+		tmp = tmp->next;
+	}
 	int idx = -1;
 	while(++idx < node_cnt)
 	{
-		if (tmp->data > tmp->next->data)
-			;// 탑노드랑 넥스트노드를 스왑하는과정을 하는 함수를 cnt만큼 반복
-			//  뽑아낸 데이터는 바로바로 짤라서 해제; 만들어진 새로운 리스트는 추가후 다시 정렬(길이 다시쟤고)
-			//  그럼 결국ㄱ 프리솔트 함수 재귀함수.
-			//  하나 남을때까지
-			// 그럼 여기서 합쳐진 노드를 계속 들고있고, 그 정보는 리스트에 추가되고, 그게 합쳐질때 노드를 생성하고
-			// 하는 방식으로다가, 수행.
-			// 
+		tmp = fre;
+		//printf("문자 : %c\n",tmp->data);
+		while (tmp)
+		{
+			if (tmp->next && (tmp->count > tmp->next->count))
+			{
+				swp.data = tmp->data;// 탑노드랑 넥스트노드를 스왑하는과정을 하는 함수를 cnt만큼 반복
+				swp.count = tmp->count;
+				tmp->data = tmp->next->data;
+				tmp->count = tmp->next->count;
+				tmp->next->data = swp.data;
+				tmp->next->count = swp.count;
+			}
+			tmp = tmp->next;
+			// if (tmp && tmp->data)
+			// 	printf("문자11 : %c\n",tmp->data);
+				//  뽑아낸 데이터는 바로바로 짤라서 해제; 만들어진 새로운 리스트는 추가후 다시 정렬(길이 다시쟤고)
+				//  그럼 결국ㄱ 프리솔트 함수 재귀함수.
+				//  하나 남을때까지
+				// 그럼 여기서 합쳐진 노드를 계속 들고있고, 그 정보는 리스트에 추가되고, 그게 합쳐질때 노드를 생성하고
+				// 하는 방식으로다가, 수행.
+		}
+		
+
 	}
 	printf("node size :%d\n", node_cnt);
+	//viwer
+	tmp = fre;
+	h = -1;
+	while(tmp)
+	{
+		printf("문자 : %c\n",tmp->data);
+		printf("빈도수 : %d\n",tmp->count);
+		tmp = tmp->next;
+	}
 	return(fre);
 }
 
@@ -307,7 +340,9 @@ t_node *ft_huffman(t_list *fre, char *str)
 	//./test jjkkkdddsss
 
 	f->left->data = min->next->count;
+	f->left->value = min->next->data;
 	f->right->data = min->count;
+	f->right->value = min->data;
 	f->data = min->count + min->next->count;
 
 	// 만약 f의 데이터값이(빈도수가) 보다 작은게 두개있으면 그두개를 부모노드로 묶어줌
@@ -322,17 +357,17 @@ t_node *ft_huffman(t_list *fre, char *str)
 	printf("\n");
 	printf("\n");
 
-	printf("\033[0;32m접두어코드\033[0m\n");
-	search_tree(t, 1);
-	search_tree(t, 2);
-	search_tree(t, 3);
-	search_tree(t, 4);
+	// printf("\033[0;32m접두어코드\033[0m\n");
+	// search_tree(t, 1);
+	// search_tree(t, 2);
+	// search_tree(t, 3);
+	// search_tree(t, 4);
 
 	printf("\n");
 	printf("\033[0;32m인코드\033[0m\n");
 	int j = -1;
 	while (str[++j])
-		encode(t, fre_check(str[j], fre));//빈도수뱉게
+		encode(t, str[j], fre_check(str[j], fre));//빈도수뱉게
 	printf("\n");
 	printf("\n");
 	return (t);
@@ -365,8 +400,8 @@ int	main(int ac, char **av)
 	ft_fre_sort(fre);
 	//난 문자별로 빈도수가 적힌 리스트가 있고(fre), 원래 문자열을 알고있어(av)
 	//허프만에서는 쟤네를 이진트리로 집어넣어야해, 빈도수가 낮은게 1오른쪽자식 높은게 0왼쪽자식이야.
-	//ft_huffman(fre, av[1]);
-	// frequency_viewer(fre);
+	ft_huffman(fre, av[1]);
+	frequency_viewer(fre);
 	
 	//printf("top value: %d", t->data);
 	// run_tree(&t);
