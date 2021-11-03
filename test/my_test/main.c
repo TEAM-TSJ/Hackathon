@@ -602,23 +602,6 @@ t_node *ft_huffman(t_list *fre, char *str)
 	//심코드 초기화 : 여기다가 데이터를 저장할것임.
 	memset(sym_code, 0, sizeof(sym_code));
 
-	//우선적으로 해줘야하는것은.. 접두어코드를 배열에 저장해야하는거네.
-	// 그다음 symcode[아스키넘버] = 접두어코드배열. 이렇게 집어넣고 심코드를 들고다니는 것임.
-
-	FILE *fd = 0;
-	char *filename = "test.encode";
-	fd = fopen(filename, "wb");
-	if(fd)
-	{
-		//size_t fwrite(const void* ptr, size_t size, size_t count, FILE* stream);
-		fwrite(str, /*배열의길이*/strlen(str), /*자료형 크기*/1, /*fd*/fd);
-		fclose(fd);
-	}
-	else
-	{
-		printf("일단에러!!!!!!\n");
-	}
-
 	int i = 0;
 	while (!stack[i])
 		stack[i++] = -1;
@@ -649,15 +632,40 @@ t_node *ft_huffman(t_list *fre, char *str)
 
 	printf("\033[0;32m코드테이블 저장상태 확인\033[0m\n");
 	codetable_view(sym_code);
-	// 코드테이블 데이터 출력실험
-	// int k = -1;
-	// while(++k < NUM_ASCII)
-	// {
-	// 	if (sym_code[k])
-	// 		printf("codetable %c: %s \n", (char)k, sym_code[k]);
-	// }
-	// printf("\n");
-	// printf("\n");
+
+	FILE *fd = 0;
+	char *filename = "test.encode";
+	char *tmp;
+	fd = fopen(filename, "wb");
+	if(fd)
+	{
+		//size_t fwrite(const void* ptr, size_t size, size_t count, FILE* stream);
+		//fwrite(str, /*배열의길이*/strlen(str), /*자료형 크기*/1, /*fd*/fd);
+		int k = -1;
+		while(++k < NUM_ASCII)
+		{
+			if (sym_code[k])
+			{
+				tmp = ft_itoa(k);
+				fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//아스키코드
+				fwrite(" ", /*배열의길이*/strlen(" "), /*자료형 크기*/1, /*fd*/fd);//아스키코드
+				fwrite(sym_code[k], /*배열의길이*/strlen(sym_code[k]), /*자료형 크기*/1, /*fd*/fd);//접두어코드
+				fwrite(" ", /*배열의길이*/strlen(" "), /*자료형 크기*/1, /*fd*/fd);//아스키코드
+				free(tmp);
+				tmp = ft_itoa(strlen(sym_code[k]));
+				fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//접두어코드 길이
+				fwrite(" ", /*배열의길이*/strlen(" "), /*자료형 크기*/1, /*fd*/fd);//아스키코드
+				free(tmp);
+				printf("%c %s %zu \n", (char)k, sym_code[k], ft_strlen(sym_code[k]));
+			}
+		}
+		fclose(fd);
+
+	}
+	else
+	{
+		printf("일단에러!!!!!!\n");
+	}
 	return (t);
 	// //부모트리를 만들어서 붙힘. 오른쪽 왼쪽순.
 }

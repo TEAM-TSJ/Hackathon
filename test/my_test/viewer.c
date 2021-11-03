@@ -28,7 +28,7 @@ void codetable_view(char **str)
 	while(++k < NUM_ASCII)
 	{
 		if (str[k])
-			printf("codetable cahr: %c, prefix: %s, length: %zu \n", (char)k, str[k], ft_strlen(str[k]));
+			printf("codetable cahr: %c, ascii: %d, prefix: %s, length: %zu \n", (char)k, k, str[k], ft_strlen(str[k]));
 	}
 	printf("\n");
 	printf("\n");
