@@ -4,6 +4,7 @@
 
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
 # include <stdlib.h>
 # include <string.h>
 
@@ -13,6 +14,9 @@
 //아스키넘버 정의(확장까지로 일단은)
 # define NUM_ASCII 256
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 short stack[100];
 int pos;
@@ -51,6 +55,12 @@ typedef struct	s_list
 	struct	s_list	*prev;//음... 푸시스왑때 쓰던거고, 지금은 안쓰고 있어서 빼도 되긴함 일단 킵.
 }				t_list;
 
+/*gnl.c*/
+void	make_read_buffer_free(char *read_buffer);
+int	get_next_line(int fd, char **line);
+
+
+/*main.c*/
 void 	frequency_viewer(t_list *frequency);
 void	ft_lst_back(t_list **list, t_list *new);
 t_list	*ft_lst(char value, int count, t_node *addr);
