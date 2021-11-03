@@ -66,7 +66,7 @@ void	ft_lst_back(t_list **list, t_list *new);
 t_list	*ft_lst(char value, int count, t_node *addr);
 void	pre_tree(t_node *t);
 t_list *ft_fre_sort(t_list *fre);
-void creat_file(char **sym_code);
+void creat_file(char **sym_code, char *ptr, int total);
 
 /*
 ** viewer.c

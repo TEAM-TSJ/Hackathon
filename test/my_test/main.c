@@ -126,7 +126,6 @@ t_node	*encode(t_node *t, t_list *pre, char str, int fre)
 */
 void	post_tree(t_node *t)
 {
-	//재귀 브레이크 포인트
 	if (!t)
 		return;
 	else
@@ -326,6 +325,10 @@ t_node *ft_huffman(t_list *fre, char *str)
 	i = 0;
 	int j = 0;
 	int check = 0;
+	int total = 0;
+	char *ptr;
+
+	ptr = ft_strdup("");
 	while (str[i]) {
 		pos = 0;
 		find = 0;
@@ -338,41 +341,95 @@ t_node *ft_huffman(t_list *fre, char *str)
 		while (stack[j] != -1) {
 			if (!check)
 				sym_code[(int)str[i]] = ft_strjoin(sym_code[(int)str[i]], ft_strdup(ft_itoa(stack[j])));
+			ptr = ft_strjoin(ptr, ft_strdup(ft_itoa(stack[j])));
 			stack[j] = -1;
 			j++;
+			total++;
 		}
 		clear_tree(t);
 		i++;
 	}
-
-	creat_file(sym_code);
+	creat_file(sym_code, ptr, total);
 	return (t);
 }
 
-void creat_file(char **sym_code)
+int	word_count(char **str)
+{
+	int idx = -1;
+	int num = 0;
+
+	while(++idx < NUM_ASCII)
+		if (str[idx])
+			num++;
+	return (num);
+}
+
+char *ten_to_two(unsigned n, int bit)
+{
+	char *tmp = ft_strdup("");
+	int i = -1;
+	unsigned a = 0x80000000;// 1000 0000 0000 0000 0000 0000 0000 0000(2) <약 21억>
+	while(++i < 32)
+	{
+		if(i > 31 - bit)
+		{
+			if ((a & n) == a)
+				tmp = ft_strjoin(tmp, ft_itoa(1));
+			else
+				tmp = ft_strjoin(tmp, ft_itoa(0));
+		}
+		a >>= 1;
+	}
+	return(tmp);
+}
+
+void creat_file(char **sym_code, char *ptr, int total)
 {
 	printf("\033[0;32m코드테이블 저장상태 확인\033[0m\n");
 	codetable_view(sym_code);
 	FILE *fd = 0;
 	char *filename = "test.encode";
 	char *tmp;
+	int n = 0;
 	fd = fopen(filename, "wb");
 	if(fd)
 	{
+		n = word_count(sym_code);
+		tmp = ten_to_two(n, 8);
+		//tmp = ft_itoa(n);
+		fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//문자 개수
+		//fwrite(" ", /*배열의길이*/1, /*자료형 크기*/1, /*fd*/fd);//일단 구분자.
+		free(tmp);
 		int k = -1;
 		while(++k < NUM_ASCII)
 		{
 			if (sym_code[k])
 			{
 				//tmp = ft_itoa(k);
-				fwrite(&k, /*배열의길이*/1, /*자료형 크기*/1, /*fd*/fd);//아스키코드
-				fwrite(sym_code[k], /*배열의길이*/strlen(sym_code[k]), /*자료형 크기*/1, /*fd*/fd);//접두어코드
-				//free(tmp);
-				tmp = ft_itoa(strlen(sym_code[k]));
+				tmp = ten_to_two(k, 8);
+				fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//아스키코드
+				free(tmp);
+				//tmp = ft_itoa(strlen(sym_code[k]));
+				tmp = ten_to_two(strlen(sym_code[k]), 4);
 				fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//접두어코드 길이
 				free(tmp);
+				tmp = ten_to_two(atoi(sym_code[k]), strlen(sym_code[k]));
+				fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);
+				//fwrite(sym_code[k], /*배열의길이*/strlen(sym_code[k]), /*자료형 크기*/1, /*fd*/fd);//접두어코드
+				free(tmp);
+				//fwrite(" ", /*배열의길이*/1, /*자료형 크기*/1, /*fd*/fd);//일단 구분자.
 			}
 		}
+		//tmp = ft_itoa(total);
+		tmp = ten_to_two(total, 32);
+		fwrite(tmp, /*배열의길이*/strlen(tmp), /*자료형 크기*/1, /*fd*/fd);//인코드된 길이.
+		//fwrite(" ", /*배열의길이*/1, /*자료형 크기*/1, /*fd*/fd);//일단 구분자.
+		free(tmp);
+
+		// 여기에 인코드 내용
+		fwrite(ptr, /*배열의길이*/strlen(ptr), /*자료형 크기*/1, /*fd*/fd);//인코드
+		//fwrite(" ", /*배열의길이*/1, /*자료형 크기*/1, /*fd*/fd);//일단 구분자.
+		free(ptr);
 		fclose(fd);
 
 	}
