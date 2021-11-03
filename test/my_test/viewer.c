@@ -20,3 +20,16 @@ void frequency_viewer(t_list *frequency)
 	}
 	//exit(0);
 }
+
+
+void codetable_view(char **str)
+{
+	int k = -1;
+	while(++k < NUM_ASCII)
+	{
+		if (str[k])
+			printf("codetable cahr: %c, prefix: %s, length: %zu \n", (char)k, str[k], ft_strlen(str[k]));
+	}
+	printf("\n");
+	printf("\n");
+}
