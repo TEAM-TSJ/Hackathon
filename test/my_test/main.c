@@ -199,29 +199,29 @@ void	pre_tree(t_node *t)
 	}
 }
 
-void	search_tree(t_node *t, int fre)
-{
-	//재귀 브레이크 포인트
-	if (!t)
-		return;
-	else
-	{
-		if(!t->left && !t->right && fre == t->data)
-		{
-			printf("->%d \n",t->data);
-			return;
-		}
-		if(t->left && fre == t->left->data)
-		{
-			printf("0");
-			search_tree(t->left, fre);
-			return;
-		}
-		if(t->left && t->right)
-			printf("1");
-		search_tree(t->right, fre);
-	}
-}
+// void	search_tree(t_node *t, int fre)
+// {
+// 	//재귀 브레이크 포인트
+// 	if (!t)
+// 		return;
+// 	else
+// 	{
+// 		if(!t->left && !t->right && fre == t->data)
+// 		{
+// 			printf("->%d \n",t->data);
+// 			return;
+// 		}
+// 		if(t->left && fre == t->left->data)
+// 		{
+// 			printf("0");
+// 			search_tree(t->left, fre);
+// 			return;
+// 		}
+// 		if(t->left && t->right)
+// 			printf("1");
+// 		search_tree(t->right, fre);
+// 	}
+// }
 
 // void	encode(t_node *t, char str, int fre)
 // {//이진트리랑, 문자하나, 빈도수 이렇게 넘겨받아온다.
@@ -428,19 +428,6 @@ t_list *ft_fre_sort(t_list *fre)
 		node_cnt++;
 		tmp = tmp->next;
 	}
-	// printf("\n--------info, node size :%d-----\n", node_cnt);
-
-	// // 들어가 있는 내용 확인.
-	// tmp = fre;
-	// int h = -1;
-	// while(tmp)
-	// {
-	// 	printf("문자 : %c\n",tmp->data);
-	// 	printf("빈도수 : %d\n",tmp->count);
-	// 	printf("노드주소 : %p\n",tmp->addr);
-	// 	tmp = tmp->next;
-	// }
-
 	// 스왑(버블정렬)
 	int idx = -1;
 	while(++idx < node_cnt)
@@ -548,11 +535,6 @@ t_node *ft_huffman(t_list *fre, char *str)
 	//빈도수가 낮은 노드를 뽑아내고
 	//while((min = min_fre(fre)) > 0)
 	min = fre;
-	/*
-	** 수정안 : 리스트에서 부모노드를 생성할때마다 부모노드를 기준으로하는 빈도수정렬을 다시 수행함
-	** 언제까지? 탐노드 하나남을때까지.
-	** 재귀 로직은 : 노드를 합치고 정렬이 다시된 리스트를 
-	*/
 
 	// 합치고 대체하게 하는거지 . 그렇지.
 
@@ -598,56 +580,84 @@ t_node *ft_huffman(t_list *fre, char *str)
 
 	t = creat_tree(t, fre);//최소두개 떼버린 리스트랑 그거 합친새노드f
 
-	// // printf("top data t : %d\n", t->data);
-	// printf("\n");
-	printf("\033[0;32m이진트리 정상작동 확인(전위순회): 루왼오\033[0m\n");
-	pre_tree(t);
-	printf("\n");
-	printf("\n");
-	
-	printf("중위순회: 왼루오\n");	
-	mid_tree(t);
-	printf("\n");
-	printf("\n");
-
-	printf("후위순회: 왼오루\n");
-	post_tree(t);
-	printf("\n");
-	printf("\n");
-
-	// // printf("\033[0;32m접두어코드\033[0m\n");
-	// // search_tree(t, 1);
-	// // search_tree(t, 2);
-	// // search_tree(t, 3);
-	// // search_tree(t, 4);
-
 	//t_list *temp = ft_lst('\0', -1, 0);
-	printf("\033[0;32m인코드\033[0m\n");// 논리구조 바꿔야댐 트리구조가 바꼈으니까.
+	//printf("\033[0;32m인코드\033[0m\n");// 논리구조 바꿔야댐 트리구조가 바꼈으니까.
 	//printf("값 %c\n",t->left->left->value);
 	//while (str[++j])
 	// encode(t, temp, str[1], fre_check(str[j], fre));//빈도수뱉게
+	
+	/*
+	** 지금 여기에 추가해야하는 부분이, 아스키코드의 값을 저장하는 심볼테이블의 개념을 구현해서, 바이너리 파일에 정보를 담아줄것임.
+	** 우선 파싱된 내용을 바탕으로 아스키넘버와 접두어코드 의 배열을 그대로 넘겨주는데,
+	** 이거는 그냥 찾아서 쓰면안되나 ?? 테이블을 꼭 만들어서 넘겨줘야하나 싶은데,
+	** 그게 끝나면 헤더에 정보가 담기고, 그다음에.. 인코드를 그대로 넘겨주는것.
+	*/
+
+	/*
+	**
+	*/
+	//int cha_fre[NUM_ASCII];
+	char *sym_code[NUM_ASCII];
+
+	//심코드 초기화 : 여기다가 데이터를 저장할것임.
+	memset(sym_code, 0, sizeof(sym_code));
+
+	//우선적으로 해줘야하는것은.. 접두어코드를 배열에 저장해야하는거네.
+	// 그다음 symcode[아스키넘버] = 접두어코드배열. 이렇게 집어넣고 심코드를 들고다니는 것임.
+
+	FILE *fd = 0;
+	char *filename = "test.encode";
+	fd = fopen(filename, "wb");
+	if(fd)
+	{
+		//size_t fwrite(const void* ptr, size_t size, size_t count, FILE* stream);
+		fwrite(str, /*배열의길이*/strlen(str), /*자료형 크기*/1, /*fd*/fd);
+		fclose(fd);
+	}
+	else
+	{
+		printf("일단에러!!!!!!\n");
+	}
+
 	int i = 0;
 	while (!stack[i])
 		stack[i++] = -1;
-	
+
 	i = 0;
 	int j = 0;
+	int check = 0;
 	while (str[i]) {
 		pos = 0;
 		find = 0;
 		j = 0;
 		find_char(t, str[i]);
+		if (sym_code[(int)str[i]])
+			check = 1;
+		else
+			check = 0;
 		while (stack[j] != -1) {
-			printf("%d", stack[j]);
+			if (!check)
+				sym_code[(int)str[i]] = ft_strjoin(sym_code[(int)str[i]], ft_strdup(ft_itoa(stack[j])));//앞에꺼에다 뒤에꺼
 			stack[j] = -1;
 			j++;
 		}
+		//데이터저장 int
 		clear_tree(t);
 		//printf("\n");
 		i++;
 	}
-	printf("\n");
-	printf("\n");
+
+	printf("\033[0;32m코드테이블 저장상태 확인\033[0m\n");
+	codetable_view(sym_code);
+	// 코드테이블 데이터 출력실험
+	// int k = -1;
+	// while(++k < NUM_ASCII)
+	// {
+	// 	if (sym_code[k])
+	// 		printf("codetable %c: %s \n", (char)k, sym_code[k]);
+	// }
+	// printf("\n");
+	// printf("\n");
 	return (t);
 	// //부모트리를 만들어서 붙힘. 오른쪽 왼쪽순.
 }
@@ -664,6 +674,7 @@ int	main(int ac, char **av)
 {
 	t_node *t;
 	t_list *fre;
+	t_list *data;
 	char *ptr;
 	
 	if (ac != 2)
@@ -673,28 +684,55 @@ int	main(int ac, char **av)
 	// 문자는 av를 그대로 활용하면 되잖아. 그냥 빈도수 낮은거찾아서 집어넣자.
 	// 집어넣은거는 빈도수 음수로 바꿔주면 되자너, 버블솔트 구현해논거 가져올수도있는데, 이게 나을거같음.
 	fre = ft_frequency(av[1]);
+	data = ft_frequency(av[1]);
+	// 솔팅하기전 자료들 리스트에 정리.
 	
 	//일단 제대로 저장되나 찍어보자 viewer
 	ft_fre_sort(fre);// 검증완료
+	ft_fre_sort(data);
 	//난 문자별로 빈도수가 적힌 리스트가 있고(fre), 원래 문자열을 알고있어(av)
 	//허프만에서는 쟤네를 이진트리로 집어넣어야해, 빈도수가 낮은게 1오른쪽자식 높은게 0왼쪽자식이야.
 	ft_huffman(fre, av[1]);
 	// frequency_viewer(fre);
-	
-	//printf("top value: %d", t->data);
-	// run_tree(&t);
-	// printf("전위순회\n");
-	// pre_tree(t);
-	// printf("\n");
 	exit(0);
 
 
 	return (ft_exit(0));
 }
-// printf("중위순회\n");	
-// mid_tree(t);
-// printf("\n");
+	// printf("\033[0;32m이진트리 정상작동 확인(전위순회): 루왼오\033[0m\n");
+	// pre_tree(t);
+	// printf("\n");
+	// printf("\n");
+	
+	// printf("중위순회: 왼루오\n");	
+	// mid_tree(t);
+	// printf("\n");
+	// printf("\n");
 
-// printf("후위순회\n");
-// post_tree(t);
-// printf("\n");
+	// printf("후위순회: 왼오루\n");
+	// post_tree(t);
+	// printf("\n");
+	// printf("\n");
+
+		// printf("\n--------info, node size :%d-----\n", node_cnt);
+
+	// // 들어가 있는 내용 확인.
+	// tmp = fre;
+	// int h = -1;
+	// while(tmp)
+	// {
+	// 	printf("문자 : %c\n",tmp->data);
+	// 	printf("빈도수 : %d\n",tmp->count);
+	// 	printf("노드주소 : %p\n",tmp->addr);
+	// 	tmp = tmp->next;
+	// }
+
+		// // printf("top data t : %d\n", t->data);
+	// printf("\n");
+
+
+	// // printf("\033[0;32m접두어코드\033[0m\n");
+	// // search_tree(t, 1);
+	// // search_tree(t, 2);
+	// // search_tree(t, 3);
+	// // search_tree(t, 4);

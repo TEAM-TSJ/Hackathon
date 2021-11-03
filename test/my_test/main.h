@@ -5,9 +5,14 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 
 # define GREEN_COLOR "\033[0;32m"
 # define  END_COLOR "\033[0m"
+
+//아스키넘버 정의(확장까지로 일단은)
+# define NUM_ASCII 256
+
 
 short stack[100];
 int pos;
@@ -39,16 +44,34 @@ typedef struct	s_list
 	char			data;//문자정보;
 	t_node			*addr;//생성된노드의 주소;
 	int				count;//노드의 빈도수 -> 부모노드일경우 자식들의 빈도수의 합이 될것임.
+	//여기다가 이진트리 내용을 추가할까.
+	char			*prefix;
 
 	struct	s_list	*next;//빈도수가 더 높은게 뒤로 위치하게 될것임
 	struct	s_list	*prev;//음... 푸시스왑때 쓰던거고, 지금은 안쓰고 있어서 빼도 되긴함 일단 킵.
 }				t_list;
 
 void 	frequency_viewer(t_list *frequency);
-
 void	ft_lst_back(t_list **list, t_list *new);
 t_list	*ft_lst(char value, int count, t_node *addr);
 void	pre_tree(t_node *t);
 t_list *ft_fre_sort(t_list *fre);
+
+/*
+** viewer.c
+*/
+
+void codetable_view(char **str);
+
+/*
+** libft.c
+*/
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strjoin(char const *str1, char const *str2);
+char	*ft_strdup(const char *s1);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
+char						*ft_itoa(int n);
 
 #endif
