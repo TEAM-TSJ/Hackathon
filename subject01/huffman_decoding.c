@@ -11,7 +11,8 @@ typedef struct s_leaf {
 typedef struct s_info {
 	t_leaf	*c_info;
 	int		char_num;
-	int		comp_data;
+	int		comp_len;
+	char	*comp_data;
 }	t_info;
 /*
 void	write_bfile(void)
@@ -41,6 +42,53 @@ void	write_bfile(void)
 		fwrite(&data[i], 1, 1, nf);
 }
 */
+char	*my_substr(char const *s, unsigned int start, size_t len)
+{
+	unsigned int	i;
+	char			*sub;
+
+	if (s == NULL)
+		return (NULL);
+	if (start >= strlen(s))
+		return (strdup(""));
+	if ((sub = (char *)malloc(sizeof(char) * len + 1)) == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
+}
+
+char	my_itoa(int n)
+{
+	return ((char)(n + 48));
+}
+
+int		my_atoi(char c)
+{
+	return ((int)(c - 48));
+}
+
+int		bin_to_int(char *s, int len)
+{
+	int	decimal;
+	int	position;
+
+	decimal = 0;
+	position = 0;
+	for (int j = len; j >= 0; j--)
+	{
+		if (my_atoi(s[j]) == 1)
+			decimal += 1 << position;
+		position++;
+	}
+	return (decimal);
+}
+
 char	*free_double_malloc(char **ptr)
 {
 	if (ptr)
@@ -53,16 +101,6 @@ char	*free_double_malloc(char **ptr)
 		free(ptr);
 	}
 	return (NULL);
-}
-
-char	my_itoa(int n)
-{
-	return ((char)(n + 48));
-}
-
-int		my_atoi(char c)
-{
-	return ((int)(c - 48));
 }
 
 int		get_file_size(FILE *ptr)
@@ -127,26 +165,86 @@ char	*trans_to_binary(int *data, int size)
 	return (trans_data);
 }
 
-void	decode_header(t_info *info, char *s)
+int		get_char_num(char *s, int *i)
 {
-	char	num[9];
+	char	*num;
 	int		decimal;
-	int		position;
 	int		len;
 
 	len = strlen(s);
+	num = (char *)malloc(sizeof(char) * 9);
 	num[8] = 0;
-	for (int i = 0; i < 8; i++)
-		num[i] = s[i];
-	decimal = 0;
-	position = 0;
-	for (int j = 7; j >= 0; j--)
+	while (*i < 8)
 	{
-		if (my_atoi(num[j]) == 1)
-			decimal += 1 << position;
-		position++;
+		num[*i] = s[*i];
+		(*i)++;
 	}
-	info->char_num = decimal;
+	decimal = bin_to_int(num, 7);
+	free(num);
+	return (decimal);
+}
+
+t_leaf	*get_leaf_info(t_info *info, char *s, int *i)
+{
+	t_leaf	*leaf;
+	char	*char_info;
+	char	*pf_size;
+
+	leaf = (t_leaf *)malloc(sizeof(t_leaf) * info->char_num);
+	if (!leaf)
+	{
+		printf("don't get c_info\n");
+		return (NULL);
+	}
+	char_info = (char *)malloc(sizeof(char) * 9);
+	pf_size = (char *)malloc(sizeof(char) * 5);
+	for (int j = 0; j < info->char_num; j++)
+	{
+		char_info = my_substr(s, *i, 8);
+		leaf[j].c = (char)bin_to_int(char_info, 7);
+		free(char_info);
+		*i += 8;
+		pf_size = my_substr(s, *i, 4);
+		leaf[j].pf_size = bin_to_int(pf_size, 3);
+		free(pf_size);
+		*i += 4;
+		leaf[j].prefix = (char *)malloc(sizeof(char) * leaf[j].pf_size + 1);
+		leaf[j].prefix = my_substr(s, *i, leaf[j].pf_size);
+		*i += leaf[j].pf_size;
+	}
+	return (leaf);
+}
+
+int		get_comp_length(char *s, int *i)
+{
+	char	*data;
+	int		len;
+
+	data = (char *)malloc(sizeof(char) * 33);
+	data = my_substr(s, *i, 32);
+	len = bin_to_int(data, 31);
+	*i += 32;
+	return (len);
+}
+
+char	*get_comp_data(t_info *info, char *s, int *i)
+{
+	char	*data;
+
+	data = (char *)malloc(sizeof(char) * info->comp_len + 1);
+	data = my_substr(s, *i, info->comp_len);
+	return (data);
+}
+
+void	decode_header(t_info *info, char *s)
+{
+	int		i;
+
+	i = 0;
+	info->char_num = get_char_num(s, &i);
+	info->c_info = get_leaf_info(info, s, &i);
+	info->comp_len = get_comp_length(s, &i);
+	info->comp_data = get_comp_data(info, s, &i);
 }
 
 void	read_header(t_info *info, FILE *ptr)
@@ -167,6 +265,13 @@ void	read_bfile(t_info *info, FILE *ptr)
 {
 	memset(info, 0, sizeof(*info));
 	read_header(info, ptr);
+/*
+	printf("문자 개수 : %d\n", info->char_num);
+	for (int i = 0; i < info->char_num; i++)
+		printf("%5c\t%5d\t%s\n", info->c_info[i].c, info->c_info[i].pf_size, info->c_info[i].prefix);
+	printf("압축 문자 비트 길이 : %d\n", info->comp_len);
+	printf("압축 문자 : %s\n", info->comp_data);
+*/
 }
 
 int 	main(int ac, char **av)
