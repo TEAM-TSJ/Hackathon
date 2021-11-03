@@ -4,10 +4,15 @@
 
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
 # include <stdlib.h>
 
 # define GREEN_COLOR "\033[0;32m"
 # define  END_COLOR "\033[0m"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 short stack[100];
 int pos;
@@ -44,8 +49,19 @@ typedef struct	s_list
 	struct	s_list	*prev;//음... 푸시스왑때 쓰던거고, 지금은 안쓰고 있어서 빼도 되긴함 일단 킵.
 }				t_list;
 
-void 	frequency_viewer(t_list *frequency);
+/*gnl.c*/
+void	make_read_buffer_free(char *read_buffer);
+int	get_next_line(int fd, char **line);
 
+/*gnl_utils.c*/
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(char *s1);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+char	*ft_strjoin(char *str1, char *str2);
+
+/*main.c*/
+void 	frequency_viewer(t_list *frequency);
 void	ft_lst_back(t_list **list, t_list *new);
 t_list	*ft_lst(char value, int count, t_node *addr);
 void	pre_tree(t_node *t);
