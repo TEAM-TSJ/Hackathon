@@ -39,8 +39,9 @@ int		get_word_num(char *str) {
 }
 
 //노드생성단계
-void	make_lst(t_Node *lst, char *str) {
+void	make_lst(char *alpha, t_Node *lst, char *str) {
 	lst[0].c = str[0];
+	alpha[0] = str[0];
 
 	int i = 0;
 	while (str[i]) {
@@ -52,8 +53,10 @@ void	make_lst(t_Node *lst, char *str) {
 				is_exist = 1;
 			j++;
 		}
-		if (!is_exist)
+		if (!is_exist) {
 			lst[j].c = c;
+			alpha[j] = c;
+		}
 		i++;
 	}
 
@@ -131,7 +134,7 @@ void	clear_tree(t_Node *t)
 	}
 }
 
-//
+//해당 문자를 찾을때까지 dfs로 반복
 void	find_char(t_Node *t, char ch)
 {
 	if (!t) {
@@ -159,24 +162,24 @@ void	find_char(t_Node *t, char ch)
 	}
 }
 
+// 3 a 11 001    56(4byte) ~~
+//while 
+
+
 
 int main(void) {
-
-	FILE *fp;
-	fp = fopen("test.txt", "r");
-	if (fp == NULL) printf("파일 열기 실패\n");
-	else printf("파일 열기 성공");
 
 	char *str = "aaaaabbbbcccdde";
 	int sen_cnt = get_word_num(str);
 
+	char *alpha = malloc(sizeof(char) * get_word_num(str));
 	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str)));
 	for (int i = 0; i < get_word_num(str); i++) {
 		lst_node[i].is_visit = 0;
 		lst_node[i].left = NULL;
 		lst_node[i].right = NULL;
 	}
-	make_lst(lst_node, str);
+	make_lst(alpha, lst_node, str);
 	sort_lst(lst_node, sen_cnt);
 	
 	t_Node *result = malloc(sizeof(t_Node));
@@ -191,13 +194,65 @@ int main(void) {
 
 	//pre_tree(result);
 
-	//stack
 	int i = 0;
 	while (!stack[i])
 		stack[i++] = -1;
-	
+
+	//보낼순으로 출력하기==========================
+		
+		//단어개수
+	int word_cnt = get_word_num(str);
+	printf ("%d", word_cnt);
+
+		//문자표시
+	int a = 0;
+	while (alpha[a]) {
+		printf("%c", alpha[a]);
+		
+		int j = 0;
+		pos = 0;
+		find = 0;
+		j = 0;
+		find_char(result, alpha[a]);
+		int word_length = 0;
+		while (stack[j] != -1) {
+			word_length++;
+			j++;
+		}
+		printf("%d", word_length);	//접두어 코드 길이출력
+		j=0;
+		while (stack[j] != -1) {
+			printf("%d", stack[j]);
+			stack[j] = -1;
+			j++;
+		}
+		clear_tree(result);
+		a++;
+	}
+
+	//========================================
+
+	//stack
+	sen_cnt = 0;
 	i = 0;
 	int j = 0;
+	while (str[i]) {
+		pos = 0;
+		find = 0;
+		j = 0;
+		find_char(result, str[i]);
+		while (stack[j] != -1) {
+			sen_cnt++;
+			stack[j] = -1;
+			j++;
+		}
+		clear_tree(result);
+		i++;
+	}
+
+	printf("%d", sen_cnt);
+	i = 0;
+	j = 0;
 	while (str[i]) {
 		pos = 0;
 		find = 0;
@@ -209,8 +264,8 @@ int main(void) {
 			j++;
 		}
 		clear_tree(result);
+		//printf("	<--   %c\n", str[i]);
 		i++;
 	}
-
 	return 0;
 }
