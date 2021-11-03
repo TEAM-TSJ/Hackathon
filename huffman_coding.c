@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 short stack[100];
 int pos = 0;
@@ -162,10 +163,44 @@ void	find_char(t_Node *t, char ch)
 	}
 }
 
-// 3 a 11 001    56(4byte) ~~
-//while 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*str;
 
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	len = strlen(s1) + strlen(s2);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
+}
 
+char *make_binary(int x, int bits){
+	char *ret = malloc(sizeof(char) * bits);
+	for (int i = 0; i < bits; i++)
+		ret[i] = '0';
+	int binary;
+    while(x > 0) {
+        binary = x % 2;
+        x /= 2;
+        ret[--bits] = binary + '0';
+    }
+	//printf("%c", ret[2]);
+	return (ret);
+}
 
 int main(void) {
 
@@ -199,10 +234,11 @@ int main(void) {
 		stack[i++] = -1;
 
 	//보낼순으로 출력하기==========================
-		
+	char *all_most = malloc(sizeof(char));
 		//단어개수
 	int word_cnt = get_word_num(str);
-	printf ("%d", word_cnt);
+	all_most = ft_strjoin(all_most, make_binary(word_cnt, 8));
+	printf ("%s\n\n", make_binary(word_cnt, 8));
 
 		//문자표시
 	int a = 0;
@@ -267,5 +303,6 @@ int main(void) {
 		//printf("	<--   %c\n", str[i]);
 		i++;
 	}
+
 	return 0;
 }
