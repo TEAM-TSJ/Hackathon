@@ -202,8 +202,6 @@ t_leaf	*get_leaf_info(t_info *info, char *s, int *i)
 		printf("don't get c_info\n");
 		return (NULL);
 	}
-	char_info = (char *)malloc(sizeof(char) * 9);
-	pf_size = (char *)malloc(sizeof(char) * 5);
 	for (int j = 0; j < info->char_num; j++)
 	{
 		char_info = my_substr(s, *i, 8);
@@ -214,7 +212,6 @@ t_leaf	*get_leaf_info(t_info *info, char *s, int *i)
 		leaf[j].pf_size = bin_to_int(pf_size, 3);
 		free(pf_size);
 		*i += 4;
-		leaf[j].prefix = (char *)malloc(sizeof(char) * leaf[j].pf_size + 1);
 		leaf[j].prefix = my_substr(s, *i, leaf[j].pf_size);
 		*i += leaf[j].pf_size;
 	}
@@ -226,10 +223,10 @@ int		get_comp_length(char *s, int *i)
 	char	*data;
 	int		len;
 
-	data = (char *)malloc(sizeof(char) * 33);
 	data = my_substr(s, *i, 32);
 	len = bin_to_int(data, 31);
 	*i += 32;
+	free(data);
 	return (len);
 }
 
@@ -237,7 +234,6 @@ char	*get_comp_data(t_info *info, char *s, int *i)
 {
 	char	*data;
 
-	data = (char *)malloc(sizeof(char) * info->comp_len + 1);
 	data = my_substr(s, *i, info->comp_len);
 	return (data);
 }
@@ -367,6 +363,7 @@ int		decode_data(t_info *info)
 			}
 		}
 	}
+	free(c);
 	return (0);
 }
 
@@ -414,6 +411,28 @@ int		decode_file(t_info *info, FILE *ptr, char *s)
 	return (0);
 }
 
+void	free_tree(t_tree *tree)
+{
+	t_tree	*node;
+
+	node = tree;
+	if (node->right != NULL)
+		free_tree(node->right);
+	if (node->left != NULL)
+		free_tree(node->left);
+	free(node);
+}
+
+void	free_struct_contents(t_info *info)
+{
+	for (int i = 0; i < info->char_num; i++)
+		free(info->c_info[i].prefix);
+	free(info->c_info);
+	free(info->comp_data);
+	free(info->de_data);
+	free_tree(info->tree);
+}
+
 int 	main(int ac, char **av)
 {
 	t_info	info;
@@ -434,5 +453,6 @@ int 	main(int ac, char **av)
 	}
 	decode_file(&info, fp, file_name);
 	fclose(fp);
+	free_struct_contents(&info);
 	return (0);
 }
