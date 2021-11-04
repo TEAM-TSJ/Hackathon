@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct s_tree {
+	struct s_tree	*left;
+	struct s_tree	*right;
+	char	leaf_c;
+}	t_tree;
+
 typedef struct s_leaf {
 	char	c;
 	int		pf_size;
@@ -10,38 +16,13 @@ typedef struct s_leaf {
 
 typedef struct s_info {
 	t_leaf	*c_info;
+	t_tree	*tree;
 	int		char_num;
 	int		comp_len;
 	char	*comp_data;
+	char	*de_data;
 }	t_info;
-/*
-void	write_bfile(void)
-{
-	FILE	*nf;
-	int		data[12];
 
-	nf = fopen("b_test_01.bin", "wb");
-	if (!nf)
-	{
-		printf("can't make b_file\n");
-		return ;
-	}
-	data[0] = 3;
-	data[1] = 97;
-	data[2] = 19;
-	data[3] = 17;
-	data[4] = 76;
-	data[5] = 101;
-	data[6] = 128;
-	data[7] = 0;
-	data[8] = 0;
-	data[9] = 4;
-	data[10] = 138;
-	data[11] = 192;
-	for (int i = 0; i < 12; i++)
-		fwrite(&data[i], 1, 1, nf);
-}
-*/
 char	*my_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
@@ -61,6 +42,31 @@ char	*my_substr(char const *s, unsigned int start, size_t len)
 	}
 	sub[i] = '\0';
 	return (sub);
+}
+
+char	*my_strjoin(char const *s1, char const *s2)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*str;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	len = strlen(s1) + strlen(s2);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
 }
 
 char	my_itoa(int n)
@@ -261,17 +267,151 @@ void	read_header(t_info *info, FILE *ptr)
 	free(trans_data);
 }
 
-void	read_bfile(t_info *info, FILE *ptr)
+int		read_bfile(t_info *info, FILE *ptr)
 {
 	memset(info, 0, sizeof(*info));
 	read_header(info, ptr);
-/*
-	printf("문자 개수 : %d\n", info->char_num);
+	return (0);
+}
+
+t_tree	*new_node()
+{
+	t_tree	*node;
+
+	node = (t_tree *)malloc(sizeof(t_tree) * 1);
+	if (!node)
+	{
+		printf("failed new node\n");
+		return (NULL);
+	}
+	return (node);
+}
+
+int		make_tree(t_info *info)
+{
+	t_tree	*root;
+	t_tree	*node;
+	char	*prefix_code;
+	int		pc_size;
+
+	root = new_node();
+	memset(root, 0, sizeof(*root));
+	node = root;
 	for (int i = 0; i < info->char_num; i++)
-		printf("%5c\t%5d\t%s\n", info->c_info[i].c, info->c_info[i].pf_size, info->c_info[i].prefix);
-	printf("압축 문자 비트 길이 : %d\n", info->comp_len);
-	printf("압축 문자 : %s\n", info->comp_data);
-*/
+	{
+		prefix_code = info->c_info[i].prefix;
+		pc_size = strlen(prefix_code);
+		for (int j = 0; prefix_code[j] != '\0'; j++)
+		{
+			if (prefix_code[j] == '0')
+			{
+				if (!node->left)
+				{
+					node->left = new_node();
+					memset(node->left, 0, sizeof(*node));
+				}
+				node = node->left;
+			}
+			else
+			{
+				if (!node->right)
+				{
+					node->right = new_node();
+					memset(node->right, 0, sizeof(*node));
+				}
+				node = node->right;
+			}
+			if (pc_size == j + 1)
+			{
+				node->leaf_c = info->c_info[i].c;
+				node = root;
+			}
+		}
+	}
+	info->tree = root;
+	return (0);
+}
+
+int		decode_data(t_info *info)
+{
+	t_tree	*node;
+	char	*comp_data;
+	char	*c;
+	int		comp_len;
+
+	node = info->tree;
+	comp_data = info->comp_data;
+	comp_len = info->comp_len;
+	info->de_data = (char *)malloc(sizeof(char));
+	c = (char *)malloc(sizeof(char) * 2);
+	if (!info->de_data || !c)
+	{
+		printf("failed malloc\n");
+		return (1);
+	}
+	c[1] = '\0';
+	info->de_data[0] = '\0';
+	for (int i = 0; i < comp_len; i++)
+	{
+		if (node->leaf_c == '\0')
+		{
+			if (comp_data[i] == '0')
+				node = node->left;
+			else
+				node = node->right;
+			if (node->leaf_c != '\0')
+			{
+				c[0] = node->leaf_c;
+				info->de_data = my_strjoin(info->de_data, c);
+				node = info->tree;
+			}
+		}
+	}
+	return (0);
+}
+
+char	*make_nfile_name(char *s)
+{
+	char	*extension;
+	char	*dot_address;
+	char	*nf_name;
+	int		len;
+	int		j;
+
+	extension = ".txt";
+	dot_address = strchr(s, '.');
+	len = dot_address - s;
+	nf_name = my_substr(s, 0, len + 4);
+	j = 3;
+	for (int i = len + 3; i >= len ; i--)
+		nf_name[i] = extension[j--];
+	return (nf_name);
+}
+
+int		make_decode_file(t_info *info, char *s)
+{
+	FILE	*nf;
+	char	*nf_name;
+
+	nf_name = make_nfile_name(s);
+	nf = fopen(nf_name, "w");
+	if (!nf)
+	{
+		printf("failed making new decoding file\n");
+		return (1);
+	}
+	fputs(info->de_data, nf);
+	fclose(nf);
+	return (0);
+}
+
+int		decode_file(t_info *info, FILE *ptr, char *s)
+{
+	read_bfile(info, ptr);
+	make_tree(info);
+	decode_data(info);
+	make_decode_file(info, s);
+	return (0);
 }
 
 int 	main(int ac, char **av)
@@ -280,7 +420,6 @@ int 	main(int ac, char **av)
 	FILE	*fp;
 	char	*file_name;
 
-//	write_bfile();
 	if (ac != 2)
 	{
 		printf("Invalid argument\n");
@@ -293,7 +432,7 @@ int 	main(int ac, char **av)
 		printf("can't open file\n");
 		return (1);
 	}
-	read_bfile(&info, fp);
+	decode_file(&info, fp, file_name);
 	fclose(fp);
 	return (0);
 }
