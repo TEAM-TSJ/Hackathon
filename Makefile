@@ -11,8 +11,8 @@ OBJS	=	$(SRCS:.c=.o)
 %.o : %.c
 	$(CC) $(FLAGS) -c -o $@ $<
 	
-$(NAME):	$(OBJS) $(HEADER)
-			$(CC) -o $(NAME) $(SRCS) -lpthread
+$(NAME):	$(OBJS)
+			$(CC) -o $(NAME) $(SRCS)
 
 all : $(NAME)
 
