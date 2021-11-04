@@ -7,10 +7,11 @@ Did you heard about..
 <div markdown="1">
 
 Chapter   I. General rules<br>
-Chapter  II. Exercise 00:<br>
-Chapter III. Exercise 01:<br>
-Chapter  IV. Exercise 02:<br>
-Chapter   V. Exercise 03:<br>
+Chapter  II. Foreword<br>
+Chapter III. Exercise 00:<br>
+Chapter  IV. Exercise 01:<br>
+Chapter   V. Exercise 02:<br>
+Chapter  VI. Exercise 03:<br>
 
 
 </div>
@@ -41,7 +42,7 @@ Chapter   V. Exercise 03:<br>
 |*Exercise : 00*|
 |-----------------|
 |Turn-in directory : ex00/|
-|Files to turn in : Makefile, main.cpp, Every other files you need|
+|Files to turn in : Makefile, main.c, Every other files you need|
 |Forbidden functions : None|
 
 <details>
@@ -52,7 +53,7 @@ Chapter   V. Exercise 03:<br>
  <br>
  ex) 레파지토리를 생성하세요. 레파지토리의 이름은 yourID_TSJ형식을 따르세요<br>
  폴더이름은 ex00 으로 하세요<br>
- 이번챕터에서는 압축의 방식에 대해서 학습합니다<br>
+ 이번 챕터에서는 압축의 방식에 대해서 학습합니다<br>
  아래의 예제를 참고하세요<br>
  <br>
  <br>
@@ -60,7 +61,7 @@ Chapter   V. Exercise 03:<br>
   🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨
  
  ```c
- //예제입니다
+ // 예제입니다
  int main(void)
  {
   char[100] = "hihihihihihihihihihi"
