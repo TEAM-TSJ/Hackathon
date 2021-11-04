@@ -203,6 +203,7 @@ char *make_binary(int x, int bits){
 	return (ret);
 }
 
+//이진법을 8자리로 맞춤, 부족할경우 뒤에 0넣어서 맞춤
 char *size_change_to_8(char *str) {
 	int i = strlen(str);
 	if (i % 8)
@@ -216,6 +217,7 @@ int		my_atoi(char c)
 	return ((int)(c - 48));
 }
 
+//2진법을 10진법으로 변환
 int		bin_to_int(char *s, int len)
 {
 	int	decimal;
@@ -232,6 +234,7 @@ int		bin_to_int(char *s, int len)
 	return (decimal);
 }
 
+//8자리씩 잘라서 10진법으로 변환하고 int 배열에 삽입
 int *make_decimal(char *str) {
 	int *ret = malloc(sizeof(int) * (strlen(str) / 8));
 	int pos = 0;
@@ -249,10 +252,10 @@ int *make_decimal(char *str) {
 	return (ret);
 }
 
-void	write_bfile(void)
+//int배열 주면 해당 내용으로 파일생성
+void	write_bfile(int *data)
 {
 	FILE	*nf;
-	int		data[10];
 
 	nf = fopen("sungclee.bin", "wb");
 	if (!nf)
@@ -260,17 +263,9 @@ void	write_bfile(void)
 		printf("can't make b_file\n");
 		return ;
 	}
-	data[0] = 5;
-	data[1] = 97;
-	data[2] = 33;
-	data[3] = 136;
-	data[4] = 150;
-	data[5] = 50;
-	data[6] = 217;
-	data[7] = 14;
-	data[8] = 50;
-	data[9] = 157;
-	for (int i = 0; i < 10; i++)
+	int len = 0;
+	while (data[len++]);
+	for (int i = 0; i < len; i++)
 		fwrite(&data[i], 1, 1, nf);
 }
 
@@ -385,15 +380,13 @@ int main(void) {
 		i++;
 	}
 	//printf("\n%s", all_most);
-	all_most = size_change_to_8(all_most);
-	printf("%s", all_most);
-	int *final = malloc(sizeof(int));
-	final = make_decimal(all_most);
-	printf("\n\n\n\n");
-	i = 0;
-	while (final[i])
-		printf("%d  ", final[i++]);
 
+	//이진법을 8자리로 맞춤 부족할경우 뒤에 0넣어서 
+	all_most = size_change_to_8(all_most);
+	
+	int *final = malloc(sizeof(int));
+	final = make_decimal(all_most);	
+	write_bfile(final);
 	return 0;
 }
 
