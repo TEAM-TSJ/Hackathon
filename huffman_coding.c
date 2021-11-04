@@ -85,6 +85,7 @@ void	sort_lst(t_Node *lst, int sen_cnt) {
 	}
 }
 
+//struct 개수세기
 int	stulen(t_Node *lst) {
 	int i = 0;
 	while (lst[i].cnt)
@@ -92,6 +93,7 @@ int	stulen(t_Node *lst) {
 	return (i);
 }
 
+//트리ㅅㅇ성
 t_Node *make_tree(t_Node *lst_node) {
 	t_Node tmp;
 	tmp.c = '\0';
@@ -207,7 +209,7 @@ char *make_binary(int x, int bits){
 char *size_change_to_8(char *str) {
 	int i = strlen(str);
 	if (i % 8)
-		for (int j = 0; j < i % 8; j++)
+		for (int j = 0; j < 8 - (i % 8); j++)
 			str = ft_strjoin(str, "0");
 	return (str);
 }
@@ -236,12 +238,12 @@ int		bin_to_int(char *s, int len)
 
 //8자리씩 잘라서 10진법으로 변환하고 int 배열에 삽입
 int *make_decimal(char *str) {
-	int *ret = malloc(sizeof(int) * (strlen(str) / 8));
+	int *ret = malloc(sizeof(int) * (strlen(str) / 8) + 1);  //19 확인
 	int pos = 0;
 	int get_10 = 0;
 	int i = 0;
 	while (str[i]) {
-		char *tmp = malloc((sizeof(char) * 8));
+		char *tmp = malloc((sizeof(char) * 8 + 1));
 		for(int j = 0; j < 8; j++) {
 			tmp[j] = str[i + j];
 		}
@@ -253,7 +255,7 @@ int *make_decimal(char *str) {
 }
 
 //int배열 주면 해당 내용으로 파일생성
-void	write_bfile(int *data)
+void	write_bfile(int *data, int max)
 {
 	FILE	*nf;
 
@@ -263,9 +265,7 @@ void	write_bfile(int *data)
 		printf("can't make b_file\n");
 		return ;
 	}
-	int len = 0;
-	while (data[len++]);
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < max; i++)
 		fwrite(&data[i], 1, 1, nf);
 }
 
@@ -300,18 +300,16 @@ int main(void) {
 	while (!stack[i])
 		stack[i++] = -1;
 
-	//보낼순으로 출력하기==========================
+	//보낼순으로 삽입하기====================================================================================
 	char *all_most = malloc(sizeof(char));
 		//단어개수
 	int word_cnt = get_word_num(str);
 	all_most = ft_strjoin(all_most, make_binary(word_cnt, 8));
-	//printf ("%s", make_binary(word_cnt, 8));
 
 		//문자표시
 	int a = 0;
 	while (alpha[a]) {
 		all_most = ft_strjoin(all_most, make_binary((int)alpha[a], 8));
-		//printf("%c --> %s ", alpha[a], make_binary((int)alpha[a], 8));
 		int j = 0;
 		pos = 0;
 		find = 0;
@@ -323,23 +321,18 @@ int main(void) {
 			j++;
 		}
 		all_most = ft_strjoin(all_most, make_binary(word_length, 4));
-		//printf(" %s ", make_binary(word_length, 4));	//접두어 코드 길이출력
 		j=0;
 		while (stack[j] != -1) {
 			char *tmp = malloc(sizeof(char));
 			tmp[0] = stack[j] + '0';
 			all_most = ft_strjoin(all_most, tmp);
-			//printf("%d", stack[j]);
 			stack[j] = -1;
 			j++;
 		}
-		//printf("%s", all_most);
-		//printf("\n");
 		clear_tree(result);
 		a++;
 	}
-
-	//========================================
+	//===================================================================================================
 
 	//stack
 	sen_cnt = 0;
@@ -359,8 +352,7 @@ int main(void) {
 		i++;
 	}
 
-	all_most = ft_strjoin(all_most, make_binary(sen_cnt, 16));
-	//printf("%s", all_most);
+	all_most = ft_strjoin(all_most, make_binary(sen_cnt, 32));
 	i = 0;
 	j = 0;
 	while (str[i]) {
@@ -376,17 +368,15 @@ int main(void) {
 			j++;
 		}
 		clear_tree(result);
-		//printf("	<--   %c\n", str[i]);
 		i++;
 	}
-	//printf("\n%s", all_most);
 
-	//이진법을 8자리로 맞춤 부족할경우 뒤에 0넣어서 
 	all_most = size_change_to_8(all_most);
 	
 	int *final = malloc(sizeof(int));
 	final = make_decimal(all_most);	
-	write_bfile(final);
+	int max = (strlen(all_most) / 8);
+	write_bfile(final, max);
 	return 0;
 }
 
