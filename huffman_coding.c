@@ -211,6 +211,69 @@ char *size_change_to_8(char *str) {
 	return (str);
 }
 
+int		my_atoi(char c)
+{
+	return ((int)(c - 48));
+}
+
+int		bin_to_int(char *s, int len)
+{
+	int	decimal;
+	int	position;
+
+	decimal = 0;
+	position = 0;
+	for (int j = len; j >= 0; j--)
+	{
+		if (my_atoi(s[j]) == 1)
+			decimal += 1 << position;
+		position++;
+	}
+	return (decimal);
+}
+
+int *make_decimal(char *str) {
+	int *ret = malloc(sizeof(int) * (strlen(str) / 8));
+	int pos = 0;
+	int get_10 = 0;
+	int i = 0;
+	while (str[i]) {
+		char *tmp = malloc((sizeof(char) * 8));
+		for(int j = 0; j < 8; j++) {
+			tmp[j] = str[i + j];
+		}
+		i += 8;
+		get_10 = bin_to_int(tmp, 7);
+		ret[pos++] = get_10;
+	}
+	return (ret);
+}
+
+void	write_bfile(void)
+{
+	FILE	*nf;
+	int		data[10];
+
+	nf = fopen("sungclee.bin", "wb");
+	if (!nf)
+	{
+		printf("can't make b_file\n");
+		return ;
+	}
+	data[0] = 5;
+	data[1] = 97;
+	data[2] = 33;
+	data[3] = 136;
+	data[4] = 150;
+	data[5] = 50;
+	data[6] = 217;
+	data[7] = 14;
+	data[8] = 50;
+	data[9] = 157;
+	for (int i = 0; i < 10; i++)
+		fwrite(&data[i], 1, 1, nf);
+}
+
 int main(void) {
 
 	char *str = "aaaaabbbbcccdde";
@@ -324,7 +387,14 @@ int main(void) {
 	//printf("\n%s", all_most);
 	all_most = size_change_to_8(all_most);
 	printf("%s", all_most);
-	
+	int *final = malloc(sizeof(int));
+	final = make_decimal(all_most);
+	printf("\n\n\n\n");
+	i = 0;
+	while (final[i])
+		printf("%d  ", final[i++]);
 
 	return 0;
 }
+
+
