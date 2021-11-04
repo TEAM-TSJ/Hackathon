@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+
 
 short stack[100];
 int pos = 0;
@@ -189,7 +191,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 char *make_binary(int x, int bits){
-	char *ret = malloc(sizeof(char) * bits);
+	char *ret = malloc(sizeof(char) * bits + 1);
 	for (int i = 0; i < bits; i++)
 		ret[i] = '0';
 	int binary;
@@ -198,8 +200,15 @@ char *make_binary(int x, int bits){
         x /= 2;
         ret[--bits] = binary + '0';
     }
-	//printf("%c", ret[2]);
 	return (ret);
+}
+
+char *size_change_to_8(char *str) {
+	int i = strlen(str);
+	if (i % 8)
+		for (int j = 0; j < i % 8; j++)
+			str = ft_strjoin(str, "0");
+	return (str);
 }
 
 int main(void) {
@@ -238,13 +247,13 @@ int main(void) {
 		//단어개수
 	int word_cnt = get_word_num(str);
 	all_most = ft_strjoin(all_most, make_binary(word_cnt, 8));
-	printf ("%s\n\n", make_binary(word_cnt, 8));
+	//printf ("%s", make_binary(word_cnt, 8));
 
 		//문자표시
 	int a = 0;
 	while (alpha[a]) {
-		printf("%c", alpha[a]);
-		
+		all_most = ft_strjoin(all_most, make_binary((int)alpha[a], 8));
+		//printf("%c --> %s ", alpha[a], make_binary((int)alpha[a], 8));
 		int j = 0;
 		pos = 0;
 		find = 0;
@@ -255,13 +264,19 @@ int main(void) {
 			word_length++;
 			j++;
 		}
-		printf("%d", word_length);	//접두어 코드 길이출력
+		all_most = ft_strjoin(all_most, make_binary(word_length, 4));
+		//printf(" %s ", make_binary(word_length, 4));	//접두어 코드 길이출력
 		j=0;
 		while (stack[j] != -1) {
-			printf("%d", stack[j]);
+			char *tmp = malloc(sizeof(char));
+			tmp[0] = stack[j] + '0';
+			all_most = ft_strjoin(all_most, tmp);
+			//printf("%d", stack[j]);
 			stack[j] = -1;
 			j++;
 		}
+		//printf("%s", all_most);
+		//printf("\n");
 		clear_tree(result);
 		a++;
 	}
@@ -286,7 +301,8 @@ int main(void) {
 		i++;
 	}
 
-	printf("%d", sen_cnt);
+	all_most = ft_strjoin(all_most, make_binary(sen_cnt, 16));
+	//printf("%s", all_most);
 	i = 0;
 	j = 0;
 	while (str[i]) {
@@ -295,7 +311,9 @@ int main(void) {
 		j = 0;
 		find_char(result, str[i]);
 		while (stack[j] != -1) {
-			printf("%d", stack[j]);
+			char *tmp = malloc(sizeof(char));
+			tmp[0] = stack[j] + '0';
+			all_most = ft_strjoin(all_most, tmp);
 			stack[j] = -1;
 			j++;
 		}
@@ -303,6 +321,10 @@ int main(void) {
 		//printf("	<--   %c\n", str[i]);
 		i++;
 	}
+	//printf("\n%s", all_most);
+	all_most = size_change_to_8(all_most);
+	printf("%s", all_most);
+	
 
 	return 0;
 }
