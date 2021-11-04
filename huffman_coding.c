@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
+#include <stdbool.h>
 
 short stack[100];
 int pos = 0;
@@ -18,7 +18,7 @@ typedef struct	s_Node {
 
 //문자열에서 중복제거한 문자의 수
 int		get_word_num(char *str) {
-	char	check[130] = "";
+	char	check[300] = "";
 	int		ret = 1;
 
 	check[0] = str[0];
@@ -269,9 +269,29 @@ void	write_bfile(int *data, int max)
 		fwrite(&data[i], 1, 1, nf);
 }
 
-int main(void) {
+int main(int argc, char **argv) {
 
-	char *str = "aaaaabbbbcccdde";
+	char *str = malloc(sizeof(char));
+   //read mode로 파일을 생성하고 오픈합니다.
+    FILE* pFile = fopen(argv[1], "r");
+    if(pFile == NULL)
+        return 0;
+ 
+    //파일의 끝이 나올때 까지 반복문으로 fgets 수행.
+    while(true)
+    {
+        char arr[1000];//문자열을 담을 변수
+        char* pStr = fgets(arr, 1000, pFile);
+        if(pStr == NULL)
+        {
+            break;
+        }
+		str = ft_strjoin(str, pStr);
+    }
+    
+    //파일 닫기
+    fclose(pFile);
+
 	int sen_cnt = get_word_num(str);
 
 	char *alpha = malloc(sizeof(char) * get_word_num(str));
@@ -301,15 +321,17 @@ int main(void) {
 		stack[i++] = -1;
 
 	//보낼순으로 삽입하기====================================================================================
-	char *all_most = malloc(sizeof(char));
+	char *all_most = malloc(sizeof(char) + 1);
 		//단어개수
 	int word_cnt = get_word_num(str);
 	all_most = ft_strjoin(all_most, make_binary(word_cnt, 8));
+	printf("%s\n", all_most);//
 
 		//문자표시
 	int a = 0;
 	while (alpha[a]) {
 		all_most = ft_strjoin(all_most, make_binary((int)alpha[a], 8));
+		printf("%c  -----> %s ", alpha[a], make_binary((int)alpha[a], 8) );//
 		int j = 0;
 		pos = 0;
 		find = 0;
@@ -321,14 +343,17 @@ int main(void) {
 			j++;
 		}
 		all_most = ft_strjoin(all_most, make_binary(word_length, 4));
+		printf("%s ", make_binary(word_length, 4));//
 		j=0;
 		while (stack[j] != -1) {
 			char *tmp = malloc(sizeof(char));
-			tmp[0] = stack[j] + '0';
+			tmp[0] = stack[j] + '0';//
+			printf("%c", tmp[0]);
 			all_most = ft_strjoin(all_most, tmp);
 			stack[j] = -1;
 			j++;
 		}
+		printf("\n");//
 		clear_tree(result);
 		a++;
 	}
@@ -353,6 +378,7 @@ int main(void) {
 	}
 
 	all_most = ft_strjoin(all_most, make_binary(sen_cnt, 32));
+	printf("%s\n", make_binary(sen_cnt, 32));
 	i = 0;
 	j = 0;
 	while (str[i]) {
@@ -372,10 +398,12 @@ int main(void) {
 	}
 
 	all_most = size_change_to_8(all_most);
-	
+	printf("\n%s\n", all_most);
+
 	int *final = malloc(sizeof(int));
 	final = make_decimal(all_most);	
 	int max = (strlen(all_most) / 8);
+	printf("%d", max);
 	write_bfile(final, max);
 	return 0;
 }
