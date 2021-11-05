@@ -182,6 +182,7 @@ void ft_tranlator(char *str);
 ```
 
 * 기대되는 출력결과는 다음과 같습니다.
+* 이전챕터의 text.txt파일과 동일한 파일을 사용하세요.
 * 실제결과는 개행이 출력되지않습니다.
 ```
  /hackathon ./foramt text.txt | cat -e
