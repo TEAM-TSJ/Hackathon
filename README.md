@@ -207,11 +207,46 @@ $
 
 # Chapter IV 인코딩 출력
 
+|*Exercise : 00*|
+|-----------------|
+|Turn-in directory : encode/|
+|Files to turn in : filename.txt, main.c, main.h, Makefile|
+|Forbidden functions : None|
+
+* 파일정보를 읽어 크기를 압축하는 프로그램을 작성합니다.
+* 압축된 파일의 확장자는 '.bin'입니다.
+* 확장자를 제외한 파일이름이 동일해야합니다.
+* 기대되는 출력결과는 다음과 같습니다.
+```
+junselee /hackathon ls -al junselee.txt
+-rw-r--r--  1 junseoplee  staff  551 11  6 00:01 junselee.txt
+junselee /hackathon ./encode junselee.txt
+junselee /hackathon ls -al junselee.bin
+-rw-r--r--  1 junseoplee  staff  268 11  6 00:02 junselee.bin
+```
+
 <br>
 <br>
 
 # Chapter VI 디코딩 출력
 
+|*Exercise : 00*|
+|-----------------|
+|Turn-in directory : decode/|
+|Files to turn in : filename.bin, main.c, main.h, Makefile|
+|Forbidden functions : None|
+
+* 압축된파일을 되돌리는 프로그램을 작성합니다.
+* 압축해제된 파일의 확장자는 '.txt'입니다.
+* 확장자를 제외한 파일이름이 동일해야합니다.
+* 기대되는 출력결과는 다음과 같습니다.
+```
+/hackathon ls -al junselee.bin
+-rw-r--r--  1 junseoplee  staff  268 11  6 00:02 junselee.bin
+/hackathon ./huffman_coding_program -d junselee.bin
+/hackathon ls -al junselee.txt
+-rw-r--r--  1 junseoplee  staff  551 11  6 00:07 junselee.txt
+```
 <br>
 <br>
 
