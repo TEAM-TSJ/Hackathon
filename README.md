@@ -17,19 +17,13 @@ Chapter  VI. Exercise 03:<br>
 </div>
 </details>
 
-# Chapter I General rules
+# Chapter I 작성규칙
 
 <details>
 <summary>open/close</summary>
 <div markdown="1">
 
- ex) 금지된 함수 사용시 0점. . . ..<br>
- ex) 작성한 챕터에대해서 설명할수있어야함.<br>
- ex) C언어를 사용합니다.<br>
- ex) 출력은 라이트 쓰세요<br>
- ex) 메모리릭관리는 철저해야합니다.<br>
- ex) 치팅금지.
- ex) 원피스 보지마세요 . tjung <br>
+42라면 누구나 알고있는 그 룰을 따르세요.
  
 </div>
 </details>
