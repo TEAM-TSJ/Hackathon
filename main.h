@@ -13,7 +13,7 @@
 # define OPTION 5
 # define ARGUMENT 6
 
-int huffman_encode(int ac, char **av);
-int huffman_decode(int ac, char **av);
+int huffman_encoding(int ac, char **av);
+int huffman_decoding(int ac, char **av);
 
 #endif

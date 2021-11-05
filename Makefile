@@ -1,6 +1,6 @@
-NAME	=	hack
+NAME	=	huffman_coding_program
 
-SRCS	=	huffman_encoding.c
+SRCS	=	main.c huffman_encoding.c huffman_decoding.c
 
 CC		=	gcc
 
@@ -22,6 +22,7 @@ clean :
 fclean : clean
 	rm -rf $(NAME)
 	rm -rf *.bin
+	rm -rf *.txt
 
 re: fclean all
 

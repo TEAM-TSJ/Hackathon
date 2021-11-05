@@ -86,9 +86,9 @@ int main(int ac, char **av)
 	switch (value)
 	{
 		case ENCODE:
-			return (0);//huffman_encode(ac, av));
+			return (huffman_encoding(ac, av));
 		case DECODE:
-			return (0);//huffman_decode(ac, av));
+			return (huffman_decoding(ac, av));
 		default:
 			return (ft_exit(value));
 	}
