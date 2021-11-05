@@ -280,6 +280,38 @@ junselee /hackathon ls -al junselee.bin
 # Chapter VII 통합 프로그램 만들기
 
 <br>
+
+## Exercise : 00. huffman_coding_program
+
+<br>
+
+|*Exercise : 00*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : main.c, main.h, Makefile Every other files you need|
+|Forbidden functions : None|
+
+* 확장자 '.txt'에 대한 압축과 해제가 가능한 프로그램을 작성합니다.
+* 옵션을 통해 실행내용을 지시 할 수있습니다.
+* 확장자를 제외한 파일이름이 동일해야합니다.
+
+<br>
+
+* 기대되는 출력결과는 다음과 같습니다.
+```
+/hackathon ./huffman_coding_program -e junselee.txt
+/hackathon ./huffman_coding_program -d junselee.bin
+...
+/hackathon ./huffman_coding_program junselee.txt
+Error: argument%
+/hackathon ./huffman_coding_program -e junselee.jpg
+Error: format
+/hackathon ./huffman_coding_program -k junselee.txt
+Error: option
+```
+
+
+<br>
 <br>
 
 # Chapter VIII zip 무손실 컨테이너 구현
