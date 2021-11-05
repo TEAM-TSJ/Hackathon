@@ -49,8 +49,8 @@ Chapter  VI. Exercise 03:<br>
 <summary>open/close</summary>
 <div markdown="1">
 
- <br>
- <br>
+<br>
+<br>
 
 |*Exercise : 00*|
 |-----------------|
@@ -63,8 +63,8 @@ Chapter  VI. Exercise 03:<br>
  "We make a Piscine"
 ```
 
- <br>
- <br>
+<br>
+<br>
  
 |*Exercise : 01*|
 |-----------------|
@@ -78,8 +78,9 @@ Chapter  VI. Exercise 03:<br>
  /hackathon ./huffman_coding_program -e text.txt
 20 12 7 4 2 2 3 5 3 2 1 1 8 4 2 1 1 2 1 1 4 2 1 1 2 %
 ```
- <br>
- <br>
+<br>
+<br>
+
 |*Exercise : 02*|
 |-----------------|
 |Turn-in directory : huffman/|
@@ -92,8 +93,9 @@ Chapter  VI. Exercise 03:<br>
 /hackathon ./huffman_coding_program -e text.txt
 2 4 2 7 3 12 3 5 1 2 1 20 1 2 1 4 1 2 1 8 1 2 1 4 2 %
 ```
- <br>
- <br>
+<br>
+<br>
+ 
 |*Exercise : 03*|
 |-----------------|
 |Turn-in directory : huffman/|
