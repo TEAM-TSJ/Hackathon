@@ -37,11 +37,11 @@ Chapter  VI. Exercise 03:<br>
 
 
 ## Chapter II
-## Exercise 00: ex) 설정
+## Exercise 00: 허프만 트리.
 
 |*Exercise : 00*|
 |-----------------|
-|Turn-in directory : ex00/|
+|Turn-in directory : huffman/|
 |Files to turn in : Makefile, main.c, Every other files you need|
 |Forbidden functions : None|
 
@@ -51,10 +51,55 @@ Chapter  VI. Exercise 03:<br>
 
  <br>
  <br>
- ex) 레파지토리를 생성하세요. 레파지토리의 이름은 yourID_TSJ형식을 따르세요<br>
- 폴더이름은 ex00 으로 하세요<br>
- 이번 챕터에서는 압축의 방식에 대해서 학습합니다<br>
- 아래의 예제를 참고하세요<br>
+
+|*Exercise : 00*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : text.txt|
+|Forbidden functions : None|
+
+* 다음과 같은 내용의 text.txt를 생성합니다.
+```
+ "We make a Piscine"
+```
+
+|*Exercise : 01*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : main.c, Every other files you need|
+|Forbidden functions : None|
+
+* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기대되는 출력결과는 다음과 같습니다.
+```
+ /hackathon ./huffman_coding_program -e text.txt
+20 12 7 4 2 2 3 5 3 2 1 1 8 4 2 1 1 2 1 1 4 2 1 1 2 %
+```
+|*Exercise : 02*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : main.c, Every other files you need|
+|Forbidden functions : None|
+ 
+* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기대되는 출력결과는 다음과 같습니다.
+```
+/hackathon ./huffman_coding_program -e text.txt
+2 4 2 7 3 12 3 5 1 2 1 20 1 2 1 4 1 2 1 8 1 2 1 4 2 %
+```
+|*Exercise : 03*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : main.c, Every other files you need|
+|Forbidden functions : None|
+
+* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기대되는 출력결과는 다음과 같습니다.
+```
+ /hackathon ./huffman_coding_program -e text.txt
+2 2 4 3 7 3 1 1 2 5 12 1 1 2 1 1 2 4 1 1 2 2 4 8 20 %
+```
+ 
  <br>
  <br>
 
