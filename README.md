@@ -53,6 +53,10 @@ Chapter  VI. Exercise 03:<br>
 ```
 <br>
 🚨 텍스트의 내용이 온전해야합니다.
+```
+/hackathon ls -al text.txt
+-rw-r--r--  1 junseoplee  staff  20 11  5 17:30 text.txt
+```
 <br>
 <br>
 
