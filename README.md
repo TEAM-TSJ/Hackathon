@@ -52,7 +52,7 @@ Chapter  VI. Exercise 03:<br>
 "We make a Piscine"
 ```
 <br>
-🚨 텍스트의 내용이 온전해야합니다.
+🚨 텍스트의 내용이 온전해야합니다. 크기를 반드시 확인하세요.
 
 ```
 /hackathon ls -al text.txt
@@ -182,6 +182,7 @@ void ft_tranlator(char *str);
 ```
 
 * 기대되는 출력결과는 다음과 같습니다.
+* 실제결과는 개행이 무시됩니다.
 ```
  /hackathon ./foramt text.txt
 00001101
