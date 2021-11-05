@@ -2,18 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+// 호프만 트리 - 기본 단위 노드 정보
 typedef struct s_tree {
 	struct s_tree	*left;
 	struct s_tree	*right;
 	char	leaf_c;
 }	t_tree;
 
+// 사용한 문자에 대해 저장할 정보들 - 아스키 문자, 문자에 해당하는 접두어 코드의 길이, 접두어 코드
 typedef struct s_leaf {
 	char	c;
 	int		pf_size;
 	char	*prefix;
 }	t_leaf;
 
+// 필요한 정보들을 모아 놓는 구조체 : (포맷) 파일 헤더 정보, 본문 정보 등등
 typedef struct s_info {
 	t_leaf	*c_info;
 	t_tree	*tree;
@@ -23,6 +26,7 @@ typedef struct s_info {
 	char	*de_data;
 }	t_info;
 
+// 원본 문자열에서 len 길이 만큼 start 위치에서 새로운 문자열로 분리
 char	*my_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
@@ -44,6 +48,7 @@ char	*my_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
+// s1 문자열에 s2 문자열 덧붙이는 기능
 char	*my_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
@@ -69,16 +74,19 @@ char	*my_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
+// int 값을 문자(c)로 반환 <- int n 으로 1 or 0 만 들어 올 것임
 char	my_itoa(int n)
 {
 	return ((char)(n + 48));
 }
 
+// 문자(c)가 들어오면 int 값으로 반환 -> char c 로 '0', '1' 만 들어 올 것임
 int		my_atoi(char c)
 {
 	return ((int)(c - 48));
 }
 
+// 이진수로 표현된 문자(char) 배열을 십진수 int 값으로 변환하는 함수
 int		bin_to_int(char *s, int len)
 {
 	int	decimal;
@@ -95,6 +103,7 @@ int		bin_to_int(char *s, int len)
 	return (decimal);
 }
 
+// 이중 포인터 메모리 해제 목적을 가짐
 char	*free_double_malloc(char **ptr)
 {
 	if (ptr)
@@ -109,6 +118,7 @@ char	*free_double_malloc(char **ptr)
 	return (NULL);
 }
 
+// 외부에서 들어온 이진파일의 크기를 바이트 단위로 구함
 int		get_file_size(FILE *ptr)
 {
 	int	file_size;
@@ -119,6 +129,7 @@ int		get_file_size(FILE *ptr)
 	return (file_size);
 }
 
+// 파라메터로 받은 이진파일의 내용을 끝까지 바이트 단위씩 십진수 형태로 읽어서 힙 공간에 저장함
 int		*read_data(FILE *ptr, int size)
 {
 	int	*predata;
@@ -134,6 +145,7 @@ int		*read_data(FILE *ptr, int size)
 	return (predata);
 }
 
+// int형 배열에 십진수 형태로 저장된 이진파일의 내용을 힙 공간에 이진수 문자열로 변환하는 기능
 char	*trans_to_binary(int *data, int size)
 {
 	char	**predata;
@@ -171,6 +183,7 @@ char	*trans_to_binary(int *data, int size)
 	return (trans_data);
 }
 
+// 파일의 헤더 분석 -> 원본파일에서 사용된 아스키 문자의 개수(8bit)
 int		get_char_num(char *s, int *i)
 {
 	char	*num;
@@ -190,6 +203,7 @@ int		get_char_num(char *s, int *i)
 	return (decimal);
 }
 
+// 파일의 헤더 분석 -> 문자 데이터 정보 -> 아스키 문자(8bit), 접두어 코드 길이(4bit), 접두어 코드
 t_leaf	*get_leaf_info(t_info *info, char *s, int *i)
 {
 	t_leaf	*leaf;
@@ -218,6 +232,7 @@ t_leaf	*get_leaf_info(t_info *info, char *s, int *i)
 	return (leaf);
 }
 
+// 파일의 헤더 분석 -> 압축 데이터의 크기 (비트 단위)
 int		get_comp_length(char *s, int *i)
 {
 	char	*data;
@@ -230,6 +245,7 @@ int		get_comp_length(char *s, int *i)
 	return (len);
 }
 
+// 파일의 본문 데이터만 반환
 char	*get_comp_data(t_info *info, char *s, int *i)
 {
 	char	*data;
@@ -238,6 +254,7 @@ char	*get_comp_data(t_info *info, char *s, int *i)
 	return (data);
 }
 
+// 파일 헤더에 대해 디코드
 void	decode_header(t_info *info, char *s)
 {
 	int		i;
@@ -249,6 +266,7 @@ void	decode_header(t_info *info, char *s)
 	info->comp_data = get_comp_data(info, s, &i);
 }
 
+// 압축 파일 데이터 읽어서 헤더 부분 디코드하는 함수
 void	read_header(t_info *info, FILE *ptr)
 {
 	int		*data;
@@ -263,6 +281,7 @@ void	read_header(t_info *info, FILE *ptr)
 	free(trans_data);
 }
 
+// 압축 파일 읽기
 int		read_bfile(t_info *info, FILE *ptr)
 {
 	memset(info, 0, sizeof(*info));
@@ -270,6 +289,7 @@ int		read_bfile(t_info *info, FILE *ptr)
 	return (0);
 }
 
+// 새로운 트리 노드 생성
 t_tree	*new_node()
 {
 	t_tree	*node;
@@ -283,6 +303,7 @@ t_tree	*new_node()
 	return (node);
 }
 
+// 호프만 트리 생성
 int		make_tree(t_info *info)
 {
 	t_tree	*root;
@@ -328,6 +349,7 @@ int		make_tree(t_info *info)
 	return (0);
 }
 
+// 호프만 트리를 가지고, 원본 압축 데이터 해석할거임
 int		decode_data(t_info *info)
 {
 	t_tree	*node;
@@ -367,6 +389,7 @@ int		decode_data(t_info *info)
 	return (0);
 }
 
+// 압축 해제할 파일 만들기 
 char	*make_nfile_name(char *s)
 {
 	char	*extension;
@@ -385,6 +408,7 @@ char	*make_nfile_name(char *s)
 	return (nf_name);
 }
 
+// 압축 해제한 파일 생성하기
 int		make_decode_file(t_info *info, char *s)
 {
 	FILE	*nf;
@@ -402,6 +426,7 @@ int		make_decode_file(t_info *info, char *s)
 	return (0);
 }
 
+// 디코드 함수
 int		decode_file(t_info *info, FILE *ptr, char *s)
 {
 	read_bfile(info, ptr);
@@ -411,6 +436,7 @@ int		decode_file(t_info *info, FILE *ptr, char *s)
 	return (0);
 }
 
+// 전이진트리 malloc free
 void	free_tree(t_tree *tree)
 {
 	t_tree	*node;
@@ -423,6 +449,7 @@ void	free_tree(t_tree *tree)
 	free(node);
 }
 
+// 구조체 부분 free()
 void	free_struct_contents(t_info *info)
 {
 	for (int i = 0; i < info->char_num; i++)
@@ -433,18 +460,14 @@ void	free_struct_contents(t_info *info)
 	free_tree(info->tree);
 }
 
-int 	main(int ac, char **av)
+// Huffman Program - Decoding Part
+int 	huffman_decoding(int ac, char **av)
 {
 	t_info	info;
 	FILE	*fp;
 	char	*file_name;
 
-	if (ac != 2)
-	{
-		printf("Invalid argument\n");
-		return (1);
-	}
-	file_name = av[1];
+	file_name = av[2];
 	fp = fopen(file_name, "rb");
 	if (!fp)
 	{
