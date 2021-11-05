@@ -90,7 +90,7 @@ void ft_preorder(t_node *tree);
 
 * 기대되는 출력결과는 다음과 같습니다.
 ```
- /hackathon ./huffman_coding_program -e text.txt
+ /hackathon ./huffman text.txt
 20 12 7 4 2 2 3 5 3 2 1 1 8 4 2 1 1 2 1 1 4 2 1 1 2 %
 ```
 <br>
@@ -113,7 +113,7 @@ void ft_inorder(t_node *tree);
 
 * 기대되는 출력결과는 다음과 같습니다.
 ```
-/hackathon ./huffman_coding_program -e text.txt
+/hackathon ./huffman text.txt
 2 4 2 7 3 12 3 5 1 2 1 20 1 2 1 4 1 2 1 8 1 2 1 4 2 %
 ```
 
@@ -137,7 +137,7 @@ void ft_postorder(t_node *tree);
 
 * 기대되는 출력결과는 다음과 같습니다.
 ```
- /hackathon ./huffman_coding_program -e text.txt
+ /hackathon ./huffman text.txt
 2 2 4 3 7 3 1 1 2 5 12 1 1 2 1 1 2 4 1 1 2 2 4 8 20 %
 ```
  
