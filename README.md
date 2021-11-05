@@ -148,7 +148,7 @@ void ft_postorder(t_node *tree);
 <br>
 
 
-# Chapter III 파일 포멧
+# Chapter III 파일 포맷
 
 <br>
 <br>
