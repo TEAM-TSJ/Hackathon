@@ -17,8 +17,7 @@ Chapter  VI. Exercise 03:<br>
 </div>
 </details>
 
-## Chapter I
-## General rules
+# Chapter I General rules
 
 <details>
 <summary>open/close</summary>
@@ -38,7 +37,6 @@ Chapter  VI. Exercise 03:<br>
 
 # Chapter II 허프만(Huffman)
 
-<br>
 <br>
 
 ## Exercise : 00. text.txt
