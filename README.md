@@ -36,7 +36,7 @@ Chapter  VI. Exercise 03:<br>
 </details>
 
 
-# 허프만(Huffman)
+# Chapter II 허프만(Huffman)
 
 <br>
 <br>
@@ -103,7 +103,7 @@ void ft_inorder(t_node *tree);
 <br>
 <br>
 
-## Exercise : 02. ft_postorder
+## Exercise : 03. ft_postorder
  
 |*Exercise : 03*|
 |-----------------|
@@ -124,40 +124,18 @@ void ft_postorder(t_node *tree);
 2 2 4 3 7 3 1 1 2 5 12 1 1 2 1 1 2 4 1 1 2 2 4 8 20 %
 ```
  
- <br>
- <br>
+<br>
+<br>
 
-  🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨
- 
- ```c
- // 예제입니다
- int main(void)
- {
-  char[100] = "hihihihihihihihihihi"
-  ...
-  return;
- 
- }
- ```
- 
- //예제 결과
- ```c
- ls -al
- ...
- a.out blabla
- ```
- 
- 💡 힌트(또는 참고) https://performance.tistory.com/17
+🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨
+💡 힌트(또는 참고) https://performance.tistory.com/17
 
-<details>
-<summary>open/close</summary>
-<div markdown="1">
 
-  
-</div>
-</details>
+# Chapter III 파일 포멧
 
-## Chapter III
+<br>
+<br>
+
 ## Exercise 01: ex) 알고리즘
 
 |*Exercise : 01*|
@@ -170,7 +148,7 @@ void ft_postorder(t_node *tree);
 <summary>open/close</summary>
 <div markdown="1">
   
- 💡 진짜는 타협하지 않는다.
+ 💡 .
 
  🚨 주의사항 : 
 
@@ -190,9 +168,9 @@ void ft_postorder(t_node *tree);
 <summary>open/close</summary>
 <div markdown="1">
 
- 💡 아이디어
+ 💡 아이디어.
 
- 🚨 주의사항
+ 🚨 주의사항.
   
 </div>
 </details>
