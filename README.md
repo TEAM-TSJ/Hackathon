@@ -254,6 +254,9 @@ junselee /hackathon ls -al junselee.bin
 -rw-r--r--  1 junseoplee  staff  551 11  6 00:07 junselee.txt
 ```
 <br>
+
+🚨 압축의 효율은 생각하지마세요! 문제없는 프로그램은 그 자체로 충분히 아름답습니다.
+
 <br>
 
 # Chapter VII 통합 프로그램 만들기
