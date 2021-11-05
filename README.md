@@ -216,7 +216,9 @@ $
 * 파일정보를 읽어 크기를 압축하는 프로그램을 작성합니다.
 * 압축된 파일의 확장자는 '.bin'입니다.
 * 확장자를 제외한 파일이름이 동일해야합니다.
+
 <br>
+
 * 기대되는 출력결과는 다음과 같습니다.
 ```
 junselee /hackathon ls -al junselee.txt
@@ -240,7 +242,9 @@ junselee /hackathon ls -al junselee.bin
 * 압축된파일을 되돌리는 프로그램을 작성합니다.
 * 압축해제된 파일의 확장자는 '.txt'입니다.
 * 확장자를 제외한 파일이름이 동일해야합니다.
+
 <br>
+
 * 기대되는 출력결과는 다음과 같습니다.
 ```
 /hackathon ls -al junselee.bin
