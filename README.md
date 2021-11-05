@@ -127,7 +127,7 @@ void ft_postorder(t_node *tree);
 <br>
 <br>
 
-🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨
+🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨 <br>
 💡 힌트(또는 참고) https://performance.tistory.com/17
 
 
@@ -136,63 +136,24 @@ void ft_postorder(t_node *tree);
 <br>
 <br>
 
-## Exercise 01: ex) 알고리즘
+# Chapter IV 인코딩 출력
 
-|*Exercise : 01*|
-|-----------------|
-|Turn-in directory : ex01/|
-|Files to turn in : Makefile, main.c, plus the needed files for your tests|
-|Forbidden functions : None|
+<br>
+<br>
 
-<details>
-<summary>open/close</summary>
-<div markdown="1">
-  
- 💡 .
+# Chapter VI 디코딩 출력
 
- 🚨 주의사항 : 
+<br>
+<br>
 
-</div>
-</details>
+# Chapter VII 통합 프로그램 만들기
 
-## Chapter IV
-## Exercise 02: ex) 추가구현
+<br>
+<br>
 
-|*Exercise : 02*|
-|-----------------|
-|Turn-in directory : ex02/|
-|Files to turn in : Makefile, main.c, plus any needed files|
-|Forbidden functions : None|
+# Chapter VIII zip 무손실 컨테이너 구현
 
-<details>
-<summary>open/close</summary>
-<div markdown="1">
+<br>
+<br>
 
- 💡 아이디어.
 
- 🚨 주의사항.
-  
-</div>
-</details>
-
-## Chapter V
-## Exercise 03: ex) 보너스
-
-|*Exercise : 03*|
-|-----------------|
-|Turn-in directory : ex03/|
-|Files to turn in : Makefile, main.c, plus any needed files|
-|Forbidden functions : None|
-
-<details>
-<summary>open/close</summary>
-<div markdown="1">
-  
-
- 💡 아이디어
-
- 🚨 주의사항
-  
-
-</div>
-</details>
