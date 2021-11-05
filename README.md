@@ -156,9 +156,9 @@ void ft_postorder(t_node *tree);
 
 <br>
 
-## Exercise : 01. header data
+## Exercise : 00. header data
 
-|*Exercise : 01*|
+|*Exercise : 00*|
 |-----------------|
 |Turn-in directory : foramt/|
 |Files to turn in : test.txt, main.c, Every other files you need|
