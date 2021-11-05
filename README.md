@@ -55,7 +55,7 @@ Chapter  VI. Exercise 03:<br>
 |*Exercise : 00*|
 |-----------------|
 |Turn-in directory : huffman/|
-|Files to turn in : text.txt|
+|Files to turn in : text.txt, Every other files you need|
 |Forbidden functions : None|
 
 * 다음과 같은 내용의 text.txt를 생성합니다.
