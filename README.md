@@ -164,7 +164,7 @@ void ft_postorder(t_node *tree);
 |Files to turn in : test.txt, main.c, Every other files you need|
 |Forbidden functions : None|
 
-* 파일압축을 위한 정보를 담는 함수를 작성해야합니다.
+* 파일압축을 위한 정보를 '이진수'로 담는 함수를 작성해야합니다.
 * 아래 정보는 필수로 담겨야만 합니다.
   * 사용된 문자의 갯수.
   * 문자의 아스키코드.
