@@ -17,7 +17,7 @@ typedef struct	s_Node {
 }				t_Node;
 
 //문자열에서 중복제거한 문자의 수
-int		get_word_num(char *str) {
+static int		get_word_num(char *str) {
 	char	check[300] = "";
 	int		ret = 1;
 
@@ -42,7 +42,7 @@ int		get_word_num(char *str) {
 }
 
 //노드생성단계
-void	make_lst(char *alpha, t_Node *lst, char *str) {
+static void	make_lst(char *alpha, t_Node *lst, char *str) {
 	lst[0].c = str[0];
 	alpha[0] = str[0];
 
@@ -73,7 +73,7 @@ void	make_lst(char *alpha, t_Node *lst, char *str) {
 }
 
 //리스트 정렬
-void	sort_lst(t_Node *lst, int sen_cnt) {
+static void	sort_lst(t_Node *lst, int sen_cnt) {
 	for (int i = 0; i < sen_cnt - 1; i++) {
 		for(int j = i + 1; j < sen_cnt; j++) {
 			if (lst[i].cnt > lst[j].cnt) {
@@ -86,7 +86,7 @@ void	sort_lst(t_Node *lst, int sen_cnt) {
 }
 
 //struct 개수세기
-int	stulen(t_Node *lst) {
+static int	stulen(t_Node *lst) {
 	int i = 0;
 	while (lst[i].cnt)
 		i++;
@@ -94,7 +94,7 @@ int	stulen(t_Node *lst) {
 }
 
 //트리구성
-t_Node *make_tree(t_Node *lst_node) {
+static t_Node *make_tree(t_Node *lst_node) {
 	t_Node tmp;
 	tmp.c = '\0';
 	tmp.is_visit = 0;
@@ -112,7 +112,7 @@ t_Node *make_tree(t_Node *lst_node) {
 }
 
 //전위순회
-void	pre_tree(t_Node *t)
+static void	pre_tree(t_Node *t)
 {
 	if (!t) {
 		return;
@@ -125,7 +125,7 @@ void	pre_tree(t_Node *t)
 }
 
 //노드방문기록 제거
-void	clear_tree(t_Node *t)
+static void	clear_tree(t_Node *t)
 {
 	if (!t) {
 		return;
@@ -138,7 +138,7 @@ void	clear_tree(t_Node *t)
 }
 
 //해당 문자를 찾을때까지 dfs로 반복
-void	find_char(t_Node *t, char ch)
+static void	find_char(t_Node *t, char ch)
 {
 	if (!t) {
 		stack[pos--] = -1;
@@ -165,7 +165,7 @@ void	find_char(t_Node *t, char ch)
 	}
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -191,7 +191,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 //x를 bits 수 만큼의 길이의 이진법표현
-char *make_binary(int x, int bits){
+static char *make_binary(int x, int bits){
 	char *ret = malloc(sizeof(char) * bits + 1);
 	for (int i = 0; i < bits; i++)
 		ret[i] = '0';
@@ -205,7 +205,7 @@ char *make_binary(int x, int bits){
 }
 
 //이진법을 8자리로 맞춤, 부족할경우 뒤에 0넣어서 맞춤
-char *size_change_to_8(char *str) {
+static char *size_change_to_8(char *str) {
 	int i = strlen(str);
 	if (i % 8)
 		for (int j = 0; j < 8 - (i % 8); j++)
@@ -213,13 +213,13 @@ char *size_change_to_8(char *str) {
 	return (str);
 }
 
-int		my_atoi(char c)
+static int		my_atoi(char c)
 {
 	return ((int)(c - 48));
 }
 
 //2진법을 10진법으로 변환
-int		bin_to_int(char *s, int len)
+static int		bin_to_int(char *s, int len)
 {
 	int	decimal;
 	int	position;
@@ -236,7 +236,7 @@ int		bin_to_int(char *s, int len)
 }
 
 //8자리씩 잘라서 10진법으로 변환하고 int 배열에 삽입
-int *make_decimal(char *str) {
+static int *make_decimal(char *str) {
 	int *ret = malloc(sizeof(int) * (strlen(str) / 8) + 1);  //19 확인
 	int pos = 0;
 	int get_10 = 0;
@@ -254,7 +254,7 @@ int *make_decimal(char *str) {
 }
 
 //int배열 주면 해당 내용으로 파일생성
-void	write_bfile(int *data, int max, char *file_name)
+static void	write_bfile(int *data, int max, char *file_name)
 {
 	FILE	*nf;
 	char *tmp = malloc(sizeof(char) * strlen(file_name) + 1);
