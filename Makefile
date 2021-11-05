@@ -1,6 +1,6 @@
 NAME	=	hack
 
-SRCS	=	huffman_coding.c
+SRCS	=	huffman_encoding.c
 
 CC		=	gcc
 
