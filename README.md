@@ -24,12 +24,12 @@
 |Files to turn in : text.txt, Every other files you need|
 |Forbidden functions : None|
 
-* 다음 내용의 text.txt를 생성합니다.
+* 다음 문자열이 담긴 text.txt를 생성합니다.
 ```
 "We make a Piscine"
 ```
 <br>
-🚨 텍스트의 내용 온전해야합니다. 크기를 반드시 확인하세요.
+🚨 텍스트의 내용은 온전해야합니다. 크기를 반드시 확인하세요.
 
 ```
 /hackathon ls -al text.txt
