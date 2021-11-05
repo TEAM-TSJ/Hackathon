@@ -56,6 +56,7 @@ Chapter  VI. Exercise 03:<br>
 <br>
 🚨 텍스트의 내용이 온전해야합니다.
 <br>
+<br>
 
 ## Exercise : 01. ft_huffman
 
@@ -72,6 +73,7 @@ t_node *ft_huffman(char *str);
 ```
 <br>
 💡 허프만트리 https://en.wikipedia.org/wiki/Huffman_coding
+<br>
 <br>
 
 ## Exercise : 02. ft_preorder
