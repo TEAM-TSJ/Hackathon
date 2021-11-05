@@ -36,14 +36,7 @@ Chapter  VI. Exercise 03:<br>
 </details>
 
 
-## Chapter II
-## Exercise 00: 허프만 트리.
-
-|*Exercise : 00*|
-|-----------------|
-|Turn-in directory : huffman/|
-|Files to turn in : Makefile, main.c, Every other files you need|
-|Forbidden functions : None|
+## Chapter II. 허프만 트리
 
 <details>
 <summary>open/close</summary>
