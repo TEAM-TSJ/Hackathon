@@ -4,7 +4,7 @@ t_list	*ft_lst(char value, int count, t_node *addr)
 {
 	t_list	*new_node;
 
-	new_node = malloc(sizeof(t_list));
+	new_node = (t_list *)malloc(sizeof(t_list) * 1);
 	if (!new_node)
 		return (0);
 	new_node->data = value;

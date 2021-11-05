@@ -1,6 +1,7 @@
 #include "main.h"
 
-static int	search_newline(char *fd_content)
+
+static int		search_newline(char *fd_content)
 {
 	int		yes_new;
 	int		no_new;
@@ -15,7 +16,7 @@ static int	search_newline(char *fd_content)
 	return (no_new);
 }
 
-static int	save_line(char **fd_content, char **line, int yes_new)
+static int		save_line(char **fd_content, char **line, int yes_new)
 {
 	char			*next_content;
 	int				new_next;
@@ -35,14 +36,13 @@ static int	save_line(char **fd_content, char **line, int yes_new)
 	return (1);
 }
 
-static int	decide_err_eof(char **fd_adr, char **line, int rd_size)
+static int		decide_err_eof(char **fd_adr, char **line, int rd_size)
 {
 	int		yes_new;
 
 	if (rd_size < 0)
 		return (-1);
-	yes_new = search_newline(*fd_adr);
-	if (*fd_adr && (yes_new) >= 0)
+	if (*fd_adr && (yes_new = search_newline(*fd_adr)) >= 0)
 		return (save_line(fd_adr, line, yes_new));
 	else if (*fd_adr && yes_new < 0)
 	{
@@ -54,13 +54,7 @@ static int	decide_err_eof(char **fd_adr, char **line, int rd_size)
 	return (0);
 }
 
-void	make_read_buffer_free(char *read_buffer)
-{
-	free(read_buffer);
-	read_buffer = 0;
-}
-
-int	get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
 	static char		*fd_content[OPEN_MAX];
 	char			*read_buffer;
@@ -69,22 +63,20 @@ int	get_next_line(int fd, char **line)
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	read_buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!(read_buffer))
+	if (!(read_buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	content_size = read(fd, read_buffer, BUFFER_SIZE);
-	while (content_size > 0)
+	while ((content_size = read(fd, read_buffer, BUFFER_SIZE)) > 0)
 	{
 		read_buffer[content_size] = '\0';
 		fd_content[fd] = ft_strjoin(fd_content[fd], read_buffer);
-		yes_newline = search_newline(fd_content[fd]);
-		if (yes_newline >= 0)
+		if ((yes_newline = search_newline(fd_content[fd])) >= 0)
 		{
-			make_read_buffer_free(read_buffer);
+			free(read_buffer);
+			read_buffer = 0;
 			return (save_line(&fd_content[fd], line, yes_newline));
 		}
-		content_size = read(fd, read_buffer, BUFFER_SIZE);
 	}
-	make_read_buffer_free(read_buffer);
+	free(read_buffer);
+	read_buffer = 0;
 	return (decide_err_eof(&fd_content[fd], line, content_size));
 }

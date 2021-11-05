@@ -11,6 +11,8 @@ void frequency_viewer(t_list *frequency)
 		printf("node num: %d\n", number);
 		printf("cha : %c\n", check->data);
 		printf("pre : %d\n", check->count);
+		printf("addr : %p\n", check->addr);
+		//printf("c : %c\n", (char)check->count);
 		printf("\n");
 		if(check->next)
 			check = check->next;

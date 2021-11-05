@@ -7,6 +7,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
 
 # define GREEN_COLOR "\033[0;32m"
 # define  END_COLOR "\033[0m"
@@ -67,6 +68,7 @@ t_list	*ft_lst(char value, int count, t_node *addr);
 void	pre_tree(t_node *t);
 t_list *ft_fre_sort(t_list *fre);
 void creat_file(char **sym_code, char *ptr, int total);
+void	ft_renew_frequency(t_list *des, t_list *src);
 
 /*
 ** viewer.c
