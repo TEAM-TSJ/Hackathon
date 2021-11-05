@@ -54,6 +54,7 @@ Chapter  VI. Exercise 03:<br>
 "We make a Piscine"
 ```
 <br>
+🚨 텍스트의 내용이 온전해야합니다.
 <br>
 
 ## Exercise : 01. ft_huffman
@@ -70,8 +71,8 @@ Chapter  VI. Exercise 03:<br>
 t_node *ft_huffman(char *str);
 ```
 <br>
-
 💡 허프만트리 https://en.wikipedia.org/wiki/Huffman_coding
+<br>
 
 ## Exercise : 02. ft_preorder
  
@@ -143,9 +144,6 @@ void ft_postorder(t_node *tree);
  
 <br>
 <br>
-
-🚨 주의사항.<br>
-💡 힌트.
 
 
 # Chapter III 파일 포멧
