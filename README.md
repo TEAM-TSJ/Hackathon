@@ -6,8 +6,10 @@
 <summary>open/close</summary>
 <div markdown="1">
 
+<br>
 42라면 누구나 알고있는 그 룰을 따르세요.
- 
+<br>
+
 </div>
 </details>
 
