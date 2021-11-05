@@ -24,7 +24,7 @@
 |Files to turn in : text.txt, Every other files you need|
 |Forbidden functions : None|
 
-* 다음과 같은 내용의 text.txt를 생성합니다.
+* 다음 내용의 text.txt를 생성합니다.
 ```
 "We make a Piscine"
 ```
