@@ -255,11 +255,20 @@ int *make_decimal(char *str) {
 }
 
 //int배열 주면 해당 내용으로 파일생성
-void	write_bfile(int *data, int max)
+void	write_bfile(int *data, int max, char *file_name)
 {
 	FILE	*nf;
+	char *tmp = malloc(sizeof(char) * strlen(file_name) + 1);
+	tmp[strlen(file_name)] = '\0';
 
-	nf = fopen("sungclee.bin", "wb");
+	int i = 0;
+	while (file_name[i] != '.') {
+		tmp[i] = file_name[i];
+		i++;
+	}
+	tmp = ft_strjoin(tmp, ".bin");
+
+	nf = fopen(tmp, "wb");
 	if (!nf)
 	{
 		printf("can't make b_file\n");
@@ -280,8 +289,8 @@ int main(int argc, char **argv) {
     //파일의 끝이 나올때 까지 반복문으로 fgets 수행.
     while(true)
     {
-        char arr[1000];//문자열을 담을 변수
-        char* pStr = fgets(arr, 1000, pFile);
+        char arr[100];//문자열을 담을 변수
+        char* pStr = fgets(arr, 100, pFile);
         if(pStr == NULL)
         {
             break;
@@ -294,7 +303,7 @@ int main(int argc, char **argv) {
 
 	int sen_cnt = get_word_num(str);
 
-	char *alpha = malloc(sizeof(char) * get_word_num(str));
+	char *alpha = malloc(sizeof(char) * get_word_num(str) + 1);
 	t_Node *lst_node = malloc((sizeof(t_Node) * get_word_num(str)));
 	for (int i = 0; i < get_word_num(str); i++) {
 		lst_node[i].is_visit = 0;
@@ -314,7 +323,7 @@ int main(int argc, char **argv) {
 		sort_lst(result, stulen(result));
 	}
 
-	//pre_tree(result);
+	//pre_tree(result); //전위순회
 
 	int i = 0;
 	while (!stack[i])
@@ -325,13 +334,11 @@ int main(int argc, char **argv) {
 		//단어개수
 	int word_cnt = get_word_num(str);
 	all_most = ft_strjoin(all_most, make_binary(word_cnt, 8));
-	printf("%s\n", all_most);//
 
 		//문자표시
 	int a = 0;
-	while (alpha[a]) {
+	while (a < get_word_num(str)) {
 		all_most = ft_strjoin(all_most, make_binary((int)alpha[a], 8));
-		printf("%c  -----> %s ", alpha[a], make_binary((int)alpha[a], 8) );//
 		int j = 0;
 		pos = 0;
 		find = 0;
@@ -343,17 +350,14 @@ int main(int argc, char **argv) {
 			j++;
 		}
 		all_most = ft_strjoin(all_most, make_binary(word_length, 4));
-		printf("%s ", make_binary(word_length, 4));//
 		j=0;
 		while (stack[j] != -1) {
 			char *tmp = malloc(sizeof(char));
-			tmp[0] = stack[j] + '0';//
-			printf("%c", tmp[0]);
+			tmp[0] = stack[j] + '0';
 			all_most = ft_strjoin(all_most, tmp);
 			stack[j] = -1;
 			j++;
 		}
-		printf("\n");//
 		clear_tree(result);
 		a++;
 	}
@@ -378,7 +382,6 @@ int main(int argc, char **argv) {
 	}
 
 	all_most = ft_strjoin(all_most, make_binary(sen_cnt, 32));
-	printf("%s\n", make_binary(sen_cnt, 32));
 	i = 0;
 	j = 0;
 	while (str[i]) {
@@ -398,14 +401,10 @@ int main(int argc, char **argv) {
 	}
 
 	all_most = size_change_to_8(all_most);
-	printf("\n%s\n", all_most);
 
 	int *final = malloc(sizeof(int));
 	final = make_decimal(all_most);	
 	int max = (strlen(all_most) / 8);
-	printf("%d", max);
-	write_bfile(final, max);
+	write_bfile(final, max, argv[1]);
 	return 0;
 }
-
-
