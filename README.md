@@ -1,21 +1,4 @@
 # 라피신 (La Piscine)
-Did you heard about..
-
-## Index
-<details>
-<summary>open/close</summary>
-<div markdown="1">
-
-Chapter   I. General rules<br>
-Chapter  II. Foreword<br>
-Chapter III. Exercise 00:<br>
-Chapter  IV. Exercise 01:<br>
-Chapter   V. Exercise 02:<br>
-Chapter  VI. Exercise 03:<br>
-
-
-</div>
-</details>
 
 # Chapter I 작성규칙
 
