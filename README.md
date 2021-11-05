@@ -36,14 +36,12 @@ Chapter  VI. Exercise 03:<br>
 </details>
 
 
-## Chapter II. 허프만 트리
-
-<details>
-<summary>open/close</summary>
-<div markdown="1">
+# 허프만(Huffman)
 
 <br>
 <br>
+
+## Exercise : 00. text.txt
 
 |*Exercise : 00*|
 |-----------------|
@@ -53,11 +51,12 @@ Chapter  VI. Exercise 03:<br>
 
 * 다음과 같은 내용의 text.txt를 생성합니다.
 ```
- "We make a Piscine"
+"We make a Piscine"
 ```
+<br>
+<br>
 
-<br>
-<br>
+## Exercise : 01. ft_preorder
  
 |*Exercise : 01*|
 |-----------------|
@@ -65,7 +64,13 @@ Chapter  VI. Exercise 03:<br>
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
 
-* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기능함수의 프로토타입은 다음과 같습니다.
+```
+void ft_preorder(t_node *tree);
+```
+<br>
+
 * 기대되는 출력결과는 다음과 같습니다.
 ```
  /hackathon ./huffman_coding_program -e text.txt
@@ -74,20 +79,31 @@ Chapter  VI. Exercise 03:<br>
 <br>
 <br>
 
+## Exercise : 02. ft_inorder
+
 |*Exercise : 02*|
 |-----------------|
 |Turn-in directory : huffman/|
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
  
-* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기능함수의 프로토타입은 다음과 같습니다.
+```
+void ft_inorder(t_node *tree);
+```
+<br>
+
 * 기대되는 출력결과는 다음과 같습니다.
 ```
 /hackathon ./huffman_coding_program -e text.txt
 2 4 2 7 3 12 3 5 1 2 1 20 1 2 1 4 1 2 1 8 1 2 1 4 2 %
 ```
+
 <br>
 <br>
+
+## Exercise : 02. ft_postorder
  
 |*Exercise : 03*|
 |-----------------|
@@ -95,7 +111,13 @@ Chapter  VI. Exercise 03:<br>
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
 
-* ex01 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 기능함수의 프로토타입은 다음과 같습니다.
+```
+void ft_postorder(t_node *tree);
+```
+<br>
+
 * 기대되는 출력결과는 다음과 같습니다.
 ```
  /hackathon ./huffman_coding_program -e text.txt
@@ -126,6 +148,10 @@ Chapter  VI. Exercise 03:<br>
  ```
  
  💡 힌트(또는 참고) https://performance.tistory.com/17
+
+<details>
+<summary>open/close</summary>
+<div markdown="1">
 
   
 </div>
