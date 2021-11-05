@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// run-length 연습
 int	main(int ac, char **av)
 {
 	char	c;
