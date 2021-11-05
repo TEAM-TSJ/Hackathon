@@ -56,15 +56,32 @@ Chapter  VI. Exercise 03:<br>
 <br>
 <br>
 
-## Exercise : 01. ft_preorder
- 
+## Exercise : 01. ft_huffman
+
 |*Exercise : 01*|
+|-----------------|
+|Turn-in directory : huffman/|
+|Files to turn in : text.txt, main.c, huffman.c|
+|Forbidden functions : None|
+
+* text.txt의 내용을 활용하여 허프만트리를 만들어주는 기능함수를 작성합니다. 
+* 기능함수의 프로토타입은 다음과 같습니다.
+```
+t_node *ft_huffman(char *str);
+```
+<br>
+
+💡 허프만트리 https://en.wikipedia.org/wiki/Huffman_coding
+
+## Exercise : 02. ft_preorder
+ 
+|*Exercise : 02*|
 |-----------------|
 |Turn-in directory : huffman/|
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
 
-* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트내용을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
 * 기능함수의 프로토타입은 다음과 같습니다.
 ```
 void ft_preorder(t_node *tree);
@@ -79,15 +96,15 @@ void ft_preorder(t_node *tree);
 <br>
 <br>
 
-## Exercise : 02. ft_inorder
+## Exercise : 03. ft_inorder
 
-|*Exercise : 02*|
+|*Exercise : 03*|
 |-----------------|
 |Turn-in directory : huffman/|
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
  
-* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트내용을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
 * 기능함수의 프로토타입은 다음과 같습니다.
 ```
 void ft_inorder(t_node *tree);
@@ -103,15 +120,15 @@ void ft_inorder(t_node *tree);
 <br>
 <br>
 
-## Exercise : 03. ft_postorder
+## Exercise : 04. ft_postorder
  
-|*Exercise : 03*|
+|*Exercise : 04*|
 |-----------------|
 |Turn-in directory : huffman/|
 |Files to turn in : main.c, Every other files you need|
 |Forbidden functions : None|
 
-* 작성한 텍스트파일을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
+* 작성한 텍스트내용을 활용하여 허프만트리를 탐색하는 기능 함수를 만듭니다.
 * 기능함수의 프로토타입은 다음과 같습니다.
 ```
 void ft_postorder(t_node *tree);
