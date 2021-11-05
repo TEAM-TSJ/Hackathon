@@ -127,8 +127,8 @@ void ft_postorder(t_node *tree);
 <br>
 <br>
 
-🚨 주의사항!  평가요소에 서브젝트에 명시되지않은 케이스가 들어갈수있음 🚨 <br>
-💡 힌트(또는 참고) https://performance.tistory.com/17
+🚨 주의사항.<br>
+💡 힌트.
 
 
 # Chapter III 파일 포멧
