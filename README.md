@@ -207,6 +207,9 @@ $
 
 # Chapter IV 인코딩
 
+<br>
+## Exercise : 00. encode
+
 |*Exercise : 00*|
 |-----------------|
 |Turn-in directory : encode/|
@@ -232,6 +235,9 @@ junselee /hackathon ls -al junselee.bin
 <br>
 
 # Chapter VI 디코딩
+
+<br>
+## Exercise : 00. decode
 
 |*Exercise : 00*|
 |-----------------|
