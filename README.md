@@ -1,5 +1,5 @@
 ## 참여자
-* junselee tjung sungclee<br>
+* junselee, tjung, sungclee<br>
 
 ## 참여파트
 * Encoding part - junselee sungclee<br>
