@@ -1,3 +1,20 @@
+## 참여자
+* junselee tjung sungclee
+** Encoding - junselee sungclee
+** Decoding - tjung
+
+## 구현 프로그램
+파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신
+파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신 제작
+
+##느낀점
+##바라는 점
+
+
+
+
+
+
 # 라피신 (La Piscine)
 
 # Chapter I 작성규칙
