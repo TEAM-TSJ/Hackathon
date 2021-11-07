@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
-**-e -d
+** 인자에러. 옵션에러. 포맷에러. 일반에러. 정상종료.
 */
 int ft_exit(int value)
 {
@@ -9,12 +9,12 @@ int ft_exit(int value)
 	{
 		case ARGUMENT:
 		{
-			write(2, "Error: argument\n", strlen("Error: invalid\n"));
+			write(2, "Error: argument\n", strlen("Error: argument\n"));
 			break ;
 		}
 		case OPTION:
 		{
-			write(2, "Error: option\n", strlen("Error: invalid\n"));
+			write(2, "Error: option\n", strlen("Error: option\n"));
 			break ;
 		}
 		case ERROR:
@@ -34,7 +34,7 @@ int ft_exit(int value)
 }
 
 /*
-** dls
+** 문자열에서 찾을문자의 인덱스 반환
 */
 int ft_search(char *str, char ch)
 {
@@ -47,7 +47,7 @@ int ft_search(char *str, char ch)
 }
 
 /*
-**
+** 파일포맷의 일치여부 확인.
 */
 int format_check(char *av, int type, int index)
 {
