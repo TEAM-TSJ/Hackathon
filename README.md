@@ -1,17 +1,17 @@
 ## 참여자
-* junselee tjung sungclee
-** Encoding - junselee sungclee
-** Decoding - tjung
+* junselee tjung sungclee<br>
+** Encoding part - junselee sungclee<br>
+** Decoding part - tjung<br>
 
 ## 구현 프로그램
-파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신
-파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신 제작
+파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신<br>
+파일 포맷에 대한 이해와 인코딩/디코딩을 경험할 수 있는 피신 제작<br>
 
-##느낀점
-##바라는 점
-
-
-
+## 느낀점
+## 바라는 점
+<br>
+<br>
+<br>
 
 
 
