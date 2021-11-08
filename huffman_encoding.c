@@ -64,8 +64,9 @@ static void	make_lst(char *alpha, t_Node *lst, char *str) {
 	}
 
 	i = 0;
+	int k = get_word_num(str);
 	while (str[i]) {
-		for (int j = 0; j < get_word_num(str); j++)
+		for (int j = 0; j < k; j++)
 			if (lst[j].c == str[i])
 				lst[j].cnt++;
 		i++;
